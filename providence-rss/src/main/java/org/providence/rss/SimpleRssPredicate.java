@@ -58,7 +58,10 @@ public class SimpleRssPredicate implements Predicate {
             }
         }
 
-        logger.trace("Message {} did not contain any of the keywords", entryBody);
+        if (logger.isTraceEnabled()) {
+            logger.trace("Message {} did not contain any of the keywords", entryBody);
+        }
+
         return false;
     }
 }

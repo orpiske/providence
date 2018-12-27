@@ -58,7 +58,10 @@ public class ContainsPredicate implements Predicate {
             }
         }
 
-        logger.trace("Message {} did not contain any of the keywords", stringBody);
+        if (logger.isTraceEnabled()) {
+            logger.trace("Message {} did not contain any of the keywords", stringBody);
+        }
+
         return false;
     }
 }
