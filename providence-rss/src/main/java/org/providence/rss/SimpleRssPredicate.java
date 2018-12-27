@@ -20,13 +20,11 @@ import com.sun.syndication.feed.synd.SyndEntryImpl;
 import org.apache.camel.Exchange;
 import org.apache.camel.Predicate;
 import org.apache.commons.configuration.AbstractConfiguration;
-import org.apache.commons.lang.StringUtils;
 import org.providence.common.ConfigurationWrapper;
 import org.providence.common.predicate.ContainsPredicate;
+import org.providence.common.predicate.MatchUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static org.apache.camel.builder.Builder.constant;
 
 public class SimpleRssPredicate implements Predicate {
     private static final Logger logger = LoggerFactory.getLogger(ContainsPredicate.class);
@@ -45,16 +43,9 @@ public class SimpleRssPredicate implements Predicate {
             return false;
         }
 
-        String[] keywords = config.getStringArray("keywords");
-
-        for (String keyword : keywords) {
-            final String title = entryBody.getTitle();
-            if (StringUtils.containsIgnoreCase(title, keyword)) {
-                logger.info("Matched keyword {} for content {}", keyword, title);
-                exchange.setProperty("title", String.format("Keyword %s matched on: %s", keyword, source));
-
-                return true;
-            }
+        final String title = entryBody.getTitle();
+        if (MatchUtils.keywordMatch(exchange, title, source)) {
+            return true;
         }
 
         if (logger.isTraceEnabled()) {
