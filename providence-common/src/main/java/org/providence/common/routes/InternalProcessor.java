@@ -26,7 +26,14 @@ public class InternalProcessor implements Processor {
     private static final Logger logger = LoggerFactory.getLogger(InternalProcessor.class);
 
     @Override
-    public void process(Exchange exchange) throws Exception {
-        logger.info("Message {} matched all the filter and predicates", exchange.getIn().getBody());
+    public void process(Exchange exchange) {
+        if (logger.isDebugEnabled()) {
+            if (logger.isTraceEnabled()) {
+                logger.trace("Message {} matched all the filter and predicates", exchange.getIn().getBody());
+            }
+            else {
+                logger.debug("Message {} matched all the filter and predicates", exchange.getIn().getMessageId());
+            }
+        }
     }
 }
