@@ -32,9 +32,8 @@ public class SimpleRssRoute extends RouteBuilder {
         from("rss:" + address + "?splitEntries=false&consumer.delay=30m")
                 .split()
                     .method(SimpleRssSplitter.class, "splitEntries")
-                .filter(new SimpleRssPredicate())
+                .filter(new SimpleRssPredicate(name))
                 .process(new SimpleRssProcessor())
-                .setProperty("source", constant("Keyword match: RSS @ " + name))
                 .to("seda:final");
     }
 }

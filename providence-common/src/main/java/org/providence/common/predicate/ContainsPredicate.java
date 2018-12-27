@@ -24,16 +24,21 @@ import org.providence.common.ConfigurationWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.apache.camel.builder.Builder.constant;
+
 public class ContainsPredicate implements Predicate {
     private static final Logger logger = LoggerFactory.getLogger(ContainsPredicate.class);
     private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();
 
+    private final String source;
+
+    public ContainsPredicate(final String source) {
+        this.source = source;
+    }
+
     @Override
     public boolean matches(Exchange exchange) {
-
         Object inBody = exchange.getIn().getBody(String.class);
-
-        logger.debug("Checking message {} of type {}", inBody, inBody.getClass());
 
         if (!(inBody instanceof String)) {
             logger.debug("Discarding message {} because it's not an string: {}", inBody, inBody.getClass());
@@ -41,12 +46,12 @@ public class ContainsPredicate implements Predicate {
             return false;
         }
 
-
         String stringBody = (String) inBody;
         String[] keywords = config.getStringArray("keywords");
 
         for (String keyword : keywords) {
             if (StringUtils.containsIgnoreCase(stringBody, keyword)) {
+                exchange.setProperty("title", constant(String.format("Keyword %s matched on: %s", keyword, source)));
                 logger.info("Matched keyword {} for content {}", keyword, stringBody);
 
                 return true;

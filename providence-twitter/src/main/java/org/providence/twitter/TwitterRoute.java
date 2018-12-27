@@ -40,10 +40,9 @@ public class TwitterRoute extends RouteBuilder {
         logger.info("Created route from: {}", inRoute);
 
         from(inRoute)
-                .filter(new ContainsPredicate())
+                .filter(new ContainsPredicate("Twitter"))
                 // Unused, for now
 //                .process(new TwitterProcessor())
-                .setProperty("source", constant("Keyword match: Twitter"))
                 .to("seda:final");
     }
 }

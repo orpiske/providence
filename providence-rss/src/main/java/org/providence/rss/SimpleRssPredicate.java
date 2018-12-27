@@ -27,11 +27,17 @@ import org.providence.common.predicate.ContainsPredicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.apache.camel.builder.Builder.constant;
+
 public class SimpleRssPredicate implements Predicate {
     private static final Logger logger = LoggerFactory.getLogger(ContainsPredicate.class);
     private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();
 
+    private final String source;
 
+    public SimpleRssPredicate(String source) {
+        this.source = source;
+    }
 
     @Override
     public boolean matches(final Exchange exchange) {
@@ -46,6 +52,7 @@ public class SimpleRssPredicate implements Predicate {
             final String title = entryBody.getTitle();
             if (StringUtils.containsIgnoreCase(title, keyword)) {
                 logger.info("Matched keyword {} for content {}", keyword, title);
+                exchange.setProperty("title", constant(String.format("Keyword %s matched on: %s", keyword, source)));
 
                 return true;
             }
