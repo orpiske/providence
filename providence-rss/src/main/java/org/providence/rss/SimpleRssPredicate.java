@@ -14,46 +14,44 @@
  * limitations under the License.
  */
 
-package org.providence.common.predicate;
+package org.providence.rss;
 
+import com.sun.syndication.feed.synd.SyndEntryImpl;
+import com.sun.syndication.feed.synd.SyndFeedImpl;
 import org.apache.camel.Exchange;
 import org.apache.camel.Predicate;
 import org.apache.commons.configuration.AbstractConfiguration;
 import org.apache.commons.lang.StringUtils;
 import org.providence.common.ConfigurationWrapper;
+import org.providence.common.predicate.ContainsPredicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ContainsPredicate implements Predicate {
+public class SimpleRssPredicate implements Predicate {
     private static final Logger logger = LoggerFactory.getLogger(ContainsPredicate.class);
     private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();
 
+
+
     @Override
-    public boolean matches(Exchange exchange) {
-
-        Object inBody = exchange.getIn().getBody(String.class);
-
-        logger.debug("Checking message {} of type {}", inBody, inBody.getClass());
-
-        if (!(inBody instanceof String)) {
-            logger.debug("Discarding message {} because it's not an string: {}", inBody, inBody.getClass());
-
+    public boolean matches(final Exchange exchange) {
+        SyndEntryImpl entryBody = SimpleRssUtil.extractEntry(exchange);
+        if (entryBody == null) {
             return false;
         }
 
-
-        String stringBody = (String) inBody;
         String[] keywords = config.getStringArray("keywords");
 
         for (String keyword : keywords) {
-            if (StringUtils.containsIgnoreCase(stringBody, keyword)) {
-                logger.info("Matched keyword {} for content {}", keyword, stringBody);
+            final String title = entryBody.getTitle();
+            if (StringUtils.containsIgnoreCase(title, keyword)) {
+                logger.info("Matched keyword {} for content {}", keyword, title);
 
                 return true;
             }
         }
 
-        logger.trace("Message {} did not contain any of the keywords", stringBody);
+        logger.trace("Message {} did not contain any of the keywords", entryBody);
         return false;
     }
 }

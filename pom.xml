@@ -35,6 +35,7 @@
         <module>providence-twitter</module>
         <module>providence-collector</module>
         <module>providence-pushover</module>
+        <module>providence-rss</module>
     </modules>
 
 

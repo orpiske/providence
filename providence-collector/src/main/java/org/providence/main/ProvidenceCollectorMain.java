@@ -7,6 +7,7 @@ import org.providence.common.Constants;
 import org.providence.common.LogConfigurator;
 import org.providence.common.routes.InternalRoute;
 import org.providence.pushover.PushoverRoute;
+import org.providence.rss.SimpleRssRoute;
 import org.providence.twitter.TwitterRoute;
 
 public class ProvidenceCollectorMain {
@@ -25,8 +26,11 @@ public class ProvidenceCollectorMain {
         CamelContext context = new DefaultCamelContext();
         try {
             context.addRoutes(new TwitterRoute());
+            context.addRoutes(new SimpleRssRoute("Hacker News", "https://news.ycombinator.com/rss"));
+
             context.addRoutes(new InternalRoute());
             context.addRoutes(new PushoverRoute());
+
             context.start();
             while (true) {
                 try {

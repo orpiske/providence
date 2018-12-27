@@ -34,7 +34,6 @@ public class PushoverRoute extends RouteBuilder {
 
         final String body = String.format("token=%s&user=%s&title=${property.source}&message=${in.body}", appToken, userToken);
 
-
         from("seda:final?multipleConsumers=true")
                 .setHeader(Exchange.CONTENT_TYPE, constant("application/x-www-form-urlencoded"))
                 .setHeader(Exchange.HTTP_METHOD, constant("POST"))
