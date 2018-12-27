@@ -22,7 +22,7 @@ public class ProvidenceCollectorMain {
             System.exit(1);
         }
 
-        LogConfigurator.debug();
+        LogConfigurator.defaultForDaemons();
         CamelContext context = new DefaultCamelContext();
         try {
             context.addRoutes(new TwitterRoute());
