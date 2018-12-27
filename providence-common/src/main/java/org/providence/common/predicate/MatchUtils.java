@@ -31,7 +31,7 @@ public class MatchUtils {
     public static boolean keywordMatch(Exchange exchange, String stringBody, String source) {
         for (String keyword : keywords) {
             if (StringUtils.containsIgnoreCase(stringBody, keyword)) {
-                exchange.setProperty("title", String.format("Keyword %s matched on: %s", keyword, source));
+                exchange.setProperty("title", String.format("Keyword %s matched on %s", keyword, source));
                 logger.info("Matched keyword {} for content", keyword);
 
                 return true;
