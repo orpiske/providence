@@ -31,9 +31,8 @@ public class PushoverRoute extends RouteBuilder {
     public void configure() throws Exception {
         final String appToken = config.getString("pushover.appToken");
         final String userToken = config.getString("pushover.userToken");
-        final String title = "Keyword Match";
 
-        final String body = String.format("token=%s&user=%s&title=%s&message=${in.body}", appToken, userToken, title);
+        final String body = String.format("token=%s&user=%s&title=${property.source}&message=${in.body}", appToken, userToken);
 
 
         from("seda:final?multipleConsumers=true")
