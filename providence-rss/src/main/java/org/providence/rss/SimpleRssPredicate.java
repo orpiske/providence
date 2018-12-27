@@ -17,7 +17,6 @@
 package org.providence.rss;
 
 import com.sun.syndication.feed.synd.SyndEntryImpl;
-import com.sun.syndication.feed.synd.SyndFeedImpl;
 import org.apache.camel.Exchange;
 import org.apache.camel.Predicate;
 import org.apache.commons.configuration.AbstractConfiguration;
@@ -52,7 +51,7 @@ public class SimpleRssPredicate implements Predicate {
             final String title = entryBody.getTitle();
             if (StringUtils.containsIgnoreCase(title, keyword)) {
                 logger.info("Matched keyword {} for content {}", keyword, title);
-                exchange.setProperty("title", constant(String.format("Keyword %s matched on: %s", keyword, source)));
+                exchange.setProperty("title", String.format("Keyword %s matched on: %s", keyword, source));
 
                 return true;
             }

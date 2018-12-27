@@ -51,7 +51,7 @@ public class ContainsPredicate implements Predicate {
 
         for (String keyword : keywords) {
             if (StringUtils.containsIgnoreCase(stringBody, keyword)) {
-                exchange.setProperty("title", constant(String.format("Keyword %s matched on: %s", keyword, source)));
+                exchange.setProperty("title", String.format("Keyword %s matched on: %s", keyword, source));
                 logger.info("Matched keyword {} for content {}", keyword, stringBody);
 
                 return true;
