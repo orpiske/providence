@@ -33,6 +33,7 @@
     <modules>
         <module>providence-common</module>
         <module>providence-twitter</module>
+        <module>providence-collector</module>
     </modules>
 
 
