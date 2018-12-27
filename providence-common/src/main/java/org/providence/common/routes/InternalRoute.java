@@ -21,7 +21,7 @@ import org.apache.camel.builder.RouteBuilder;
 public class InternalRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("direct:final")
+        from("seda:final?multipleConsumers=true")
                 .process(new InternalProcessor());
     }
 }

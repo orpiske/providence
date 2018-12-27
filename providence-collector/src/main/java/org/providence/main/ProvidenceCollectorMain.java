@@ -6,12 +6,14 @@ import org.providence.common.ConfigurationWrapper;
 import org.providence.common.Constants;
 import org.providence.common.LogConfigurator;
 import org.providence.common.routes.InternalRoute;
+import org.providence.pushover.PushoverRoute;
 import org.providence.twitter.TwitterRoute;
 
 public class ProvidenceCollectorMain {
     public static void main(String[] args) {
         try {
             ConfigurationWrapper.initConfiguration(Constants.PROVIDENCE_CONFIG_DIR, "providence-twitter.properties");
+            ConfigurationWrapper.initConfiguration(Constants.PROVIDENCE_CONFIG_DIR, "providence-pushover.properties");
             ConfigurationWrapper.initConfiguration(Constants.PROVIDENCE_CONFIG_DIR, "providence-common.properties");
         } catch (Exception e) {
             System.err.println("Unable to initialize configuration file: " + e.getMessage());
@@ -24,6 +26,7 @@ public class ProvidenceCollectorMain {
         try {
             context.addRoutes(new TwitterRoute());
             context.addRoutes(new InternalRoute());
+            context.addRoutes(new PushoverRoute());
             context.start();
             while (true) {
                 try {

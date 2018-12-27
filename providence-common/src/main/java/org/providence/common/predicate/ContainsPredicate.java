@@ -19,6 +19,7 @@ package org.providence.common.predicate;
 import org.apache.camel.Exchange;
 import org.apache.camel.Predicate;
 import org.apache.commons.configuration.AbstractConfiguration;
+import org.apache.commons.lang.StringUtils;
 import org.providence.common.ConfigurationWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +43,7 @@ public class ContainsPredicate implements Predicate {
         String[] keywords = config.getStringArray("keywords");
 
         for (String keyword : keywords) {
-            if (stringBody.contains(keyword)) {
+            if (StringUtils.containsIgnoreCase(stringBody, keyword)) {
                 logger.info("Matched keyword {} for content {}", keyword, stringBody);
 
                 return true;
