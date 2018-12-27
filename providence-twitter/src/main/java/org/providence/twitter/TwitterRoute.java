@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
-package org.providence.twitter;import org.apache.camel.builder.RouteBuilder;
+package org.providence.twitter;
+
+import org.apache.camel.builder.RouteBuilder;
 import org.apache.commons.configuration.AbstractConfiguration;
+import org.providence.common.predicate.ContainsPredicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +28,7 @@ public class TwitterRoute extends RouteBuilder {
     private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();
     private static final Logger logger = LoggerFactory.getLogger(TwitterRoute.class);
 
-    public void configure() throws Exception {
+    public void configure() {
         final String consumerKey = config.getString("consumerKey");
         final String consumerSecret = config.getString("consumerSecret");
         final String accessToken = config.getString("accessToken");
@@ -37,8 +40,9 @@ public class TwitterRoute extends RouteBuilder {
         logger.info("Created route from: {}", inRoute);
 
         from(inRoute)
-                .process(new TwitterProcessor())
-                .log("Received message ${in.body} / ${headers}")
-                .to("websocket:camel-tweet?sendToAll=true");
+                .filter(new ContainsPredicate())
+                // Unused, for now
+//                .process(new TwitterProcessor())
+                .to("direct:final");
     }
 }
