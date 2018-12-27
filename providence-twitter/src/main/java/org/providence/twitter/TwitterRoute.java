@@ -34,7 +34,7 @@ public class TwitterRoute extends RouteBuilder {
         final String accessToken = config.getString("accessToken");
         final String accessTokenSecret = config.getString("accessTokenSecret");
 
-        final String inRoute = String.format("twitter://timeline/home?type=polling&delay=60000&consumerKey=%s&consumerSecret=%s&accessToken=%s&accessTokenSecret=%s",
+        final String inRoute = String.format("twitter://timeline/home?type=polling&delay=300000&consumerKey=%s&consumerSecret=%s&accessToken=%s&accessTokenSecret=%s",
                 consumerKey, consumerSecret, accessToken, accessTokenSecret);
 
         logger.info("Created route from: {}", inRoute);
@@ -43,6 +43,6 @@ public class TwitterRoute extends RouteBuilder {
                 .filter(new ContainsPredicate())
                 // Unused, for now
 //                .process(new TwitterProcessor())
-                .to("direct:final");
+                .to("seda:final");
     }
 }
