@@ -19,12 +19,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-websocket</artifactId>
-            <version>${camel.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.providence</groupId>
             <artifactId>providence-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
