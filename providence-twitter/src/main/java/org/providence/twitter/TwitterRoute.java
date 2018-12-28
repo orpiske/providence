@@ -42,6 +42,6 @@ public class TwitterRoute extends RouteBuilder {
         from(inRoute)
                 .filter(new ContainsPredicate("Twitter"))
                 .process(new TwitterProcessor())
-                .to("seda:final");
+                .to("seda:internal");
     }
 }

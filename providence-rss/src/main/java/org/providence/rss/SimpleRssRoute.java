@@ -37,6 +37,6 @@ public class SimpleRssRoute extends RouteBuilder {
                     .method(SimpleRssSplitter.class, "splitEntries")
                 .filter(new SimpleRssPredicate(name))
                 .process(new SimpleRssProcessor(rssNormalizer))
-                .to("seda:final");
+                .to("seda:internal");
     }
 }
