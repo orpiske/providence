@@ -27,7 +27,9 @@ public class SimpleRssUtil {
     public static SyndEntryImpl extractEntry(final Exchange exchange) {
         Object inBody = exchange.getIn().getBody();
 
-        logger.trace("Checking message of type {} with body {}", inBody.getClass(), inBody);
+        if (logger.isTraceEnabled()) {
+            logger.trace("Checking message of type {} with body {}", inBody.getClass(), inBody);
+        }
 
         if (!(inBody instanceof SyndEntryImpl)) {
             logger.debug("Discarding message {} because it's not of the expected type: {}", inBody, inBody.getClass());
