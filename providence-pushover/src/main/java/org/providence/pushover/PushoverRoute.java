@@ -32,7 +32,7 @@ public class PushoverRoute extends RouteBuilder {
         final String appToken = config.getString("pushover.appToken");
         final String userToken = config.getString("pushover.userToken");
 
-        final String body = String.format("token=%s&user=%s&title=${property.title}&message=${in.body}", appToken, userToken);
+        final String body = String.format("token=%s&user=%s&title=${property.title}&message=${in.body}&html=1", appToken, userToken);
 
         from("seda:final?multipleConsumers=true")
                 .setHeader(Exchange.CONTENT_TYPE, constant("application/x-www-form-urlencoded"))
