@@ -29,10 +29,10 @@ public class TwitterRoute extends RouteBuilder {
     private static final Logger logger = LoggerFactory.getLogger(TwitterRoute.class);
 
     public void configure() {
-        final String consumerKey = config.getString("consumerKey");
-        final String consumerSecret = config.getString("consumerSecret");
-        final String accessToken = config.getString("accessToken");
-        final String accessTokenSecret = config.getString("accessTokenSecret");
+        final String consumerKey = config.getString("twitter.consumerKey");
+        final String consumerSecret = config.getString("twitter.consumerSecret");
+        final String accessToken = config.getString("twitter.accessToken");
+        final String accessTokenSecret = config.getString("twitter.accessTokenSecret");
 
         final String inRoute = String.format("twitter://timeline/home?type=polling&delay=950000&consumerKey=%s&consumerSecret=%s&accessToken=%s&accessTokenSecret=%s",
                 consumerKey, consumerSecret, accessToken, accessTokenSecret);
