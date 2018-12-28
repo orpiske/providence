@@ -19,14 +19,18 @@ package org.providence.rss;
 import com.sun.syndication.feed.synd.SyndEntryImpl;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.providence.rss.normalizer.RssNormalizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.URLEncoder;
-import java.util.Date;
-
 public class SimpleRssProcessor implements Processor {
     private static final Logger logger = LoggerFactory.getLogger(SimpleRssProcessor.class);
+    private RssNormalizer normalizer;
+
+    public SimpleRssProcessor(RssNormalizer normalizer) {
+        this.normalizer = normalizer;
+    }
+
     @Override
     public void process(Exchange exchange) throws Exception {
         SyndEntryImpl entryBody = SimpleRssUtil.extractEntry(exchange);
@@ -38,17 +42,7 @@ public class SimpleRssProcessor implements Processor {
             logger.trace("Content: {}", entryBody);
         }
 
-        String newBody;
-        Date publishedDate = entryBody.getPublishedDate();
-        if (publishedDate != null) {
-            newBody = String.format("<a href=\"%s\">%s</a> published on %s. Follow the %s",
-                    URLEncoder.encode(entryBody.getLink(), "UTF-8"), entryBody.getTitle(), entryBody.getPublishedDate(),
-                    entryBody.getDescription().getValue());
-        }
-        else {
-            newBody = String.format("<a href=\"%s\">%s</a>",
-                    URLEncoder.encode(entryBody.getLink(), "UTF-8"), entryBody.getTitle());
-        }
+        String newBody = normalizer.normalize(entryBody);
 
         exchange.setProperty("format", "formatted");
         exchange.getIn().setBody(newBody);

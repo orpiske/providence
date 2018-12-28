@@ -17,14 +17,17 @@
 package org.providence.rss;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.providence.rss.normalizer.RssNormalizer;
 
 public class SimpleRssRoute extends RouteBuilder {
     private final String address;
     private final String name;
+    private final RssNormalizer rssNormalizer;
 
-    public SimpleRssRoute(final String name, final String address) {
+    public SimpleRssRoute(final String name, final String address, final RssNormalizer rssNormalizer) {
         this.name = name;
         this.address = address;
+        this.rssNormalizer = rssNormalizer;
     }
 
     @Override
@@ -33,7 +36,7 @@ public class SimpleRssRoute extends RouteBuilder {
                 .split()
                     .method(SimpleRssSplitter.class, "splitEntries")
                 .filter(new SimpleRssPredicate(name))
-                .process(new SimpleRssProcessor())
+                .process(new SimpleRssProcessor(rssNormalizer))
                 .to("seda:final");
     }
 }
