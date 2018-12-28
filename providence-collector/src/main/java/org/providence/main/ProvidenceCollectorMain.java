@@ -27,7 +27,7 @@ public class ProvidenceCollectorMain {
         try {
             context.addRoutes(new TwitterRoute());
             context.addRoutes(new SimpleRssRoute("Hacker News", "https://news.ycombinator.com/rss"));
-            context.addRoutes(new SimpleRssRoute("Slashdot", "http://rss.slashdot.org/Slashdot/slashdotMain"));
+            context.addRoutes(new SimpleRssRoute("Slashdot", "http://rss.slashdot.org/Slashdot/slashdotMain/to"));
 
             context.addRoutes(new InternalRoute());
             context.addRoutes(new PushoverRoute());
