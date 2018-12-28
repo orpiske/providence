@@ -14,27 +14,21 @@
  * limitations under the License.
  */
 
-package org.providence.twitter;
+package org.providence.pushover;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import twitter4j.Status;
 
-public class TwitterProcessor implements Processor {
-    private static final Logger logger = LoggerFactory.getLogger(TwitterProcessor.class);
+public class AddReferenceUrlProcessor implements Processor {
+    @Override
+    public void process(Exchange exchange) throws Exception {
+        String body = exchange.getIn().getBody(String.class);
 
-    public void process(Exchange exchange) {
-        Status status = exchange.getIn().getBody(Status.class);
+        Object referenceUrl = exchange.getProperty("reference");
 
-        if (logger.isTraceEnabled()) {
-            logger.trace("Content: {}", status);
+        if (referenceUrl != null) {
+            String newBody = String.format("%s&url=%s&url_title=View", body, referenceUrl);
+            exchange.getIn().setBody(newBody);
         }
-
-        exchange.setProperty("format", "raw");
-
-        String refLink = String.format("https://twitter.com/%s/status/%d", status.getUser().getScreenName(), status.getId());
-        exchange.setProperty("reference", refLink);
     }
 }

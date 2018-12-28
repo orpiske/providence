@@ -18,6 +18,7 @@ package org.providence.pushover;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.processor.ErrorHandler;
 import org.apache.commons.configuration.AbstractConfiguration;
 import org.providence.common.ConfigurationWrapper;
 import org.slf4j.Logger;
@@ -27,17 +28,33 @@ public class PushoverRoute extends RouteBuilder {
     private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();
     private static final Logger logger = LoggerFactory.getLogger(PushoverRoute.class);
 
+    class PushoverError implements ErrorHandler {
+        @Override
+        public void process(Exchange exchange) throws Exception {
+            logger.error("Failed: {}", exchange.getIn().getBody());
+        }
+    }
+
     @Override
     public void configure() throws Exception {
         final String appToken = config.getString("pushover.appToken");
         final String userToken = config.getString("pushover.userToken");
 
-        final String body = String.format("token=%s&user=%s&title=${property.title}&message=${in.body}&html=1", appToken, userToken);
+        final String formattedBody = String.format("token=%s&user=%s&title=${property.title}&message=${in.body}&html=1", appToken, userToken);
+        final String rawBody = String.format("token=%s&user=%s&title=${property.title}&message=${in.body}", appToken, userToken);
+
+        errorHandler(defaultErrorHandler().onExceptionOccurred(new PushoverError()));
 
         from("seda:final?multipleConsumers=true")
                 .setHeader(Exchange.CONTENT_TYPE, constant("application/x-www-form-urlencoded"))
                 .setHeader(Exchange.HTTP_METHOD, constant("POST"))
-                .setBody(simple(body))
+                .choice()
+                    .when(exchange -> exchange.getProperty("format").equals("raw"))
+                        .setBody(simple(rawBody))
+                    .otherwise()
+                        .setBody(simple(formattedBody))
+                    .end()
+                .process(new AddReferenceUrlProcessor())
                 .to("https://api.pushover.net/1/messages.json");
     }
 }

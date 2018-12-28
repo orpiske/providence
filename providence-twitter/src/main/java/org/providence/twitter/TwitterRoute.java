@@ -41,8 +41,7 @@ public class TwitterRoute extends RouteBuilder {
 
         from(inRoute)
                 .filter(new ContainsPredicate("Twitter"))
-                // Unused, for now
-//                .process(new TwitterProcessor())
+                .process(new TwitterProcessor())
                 .to("seda:final");
     }
 }
