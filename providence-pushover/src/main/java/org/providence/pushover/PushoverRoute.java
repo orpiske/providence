@@ -31,8 +31,9 @@ public class PushoverRoute extends RouteBuilder {
 
     class PushoverError implements ErrorHandler {
         @Override
-        public void process(Exchange exchange) throws Exception {
-            logger.error("Failed: {}", exchange.getIn().getBody());
+        public void process(Exchange exchange) {
+            logger.error("Failed to process message {} from {}", exchange.getIn().getMessageId(),
+                    exchange.getProperty(RouteConstants.SOURCE));
         }
     }
 
