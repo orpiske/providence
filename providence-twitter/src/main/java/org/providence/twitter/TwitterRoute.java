@@ -18,6 +18,7 @@ package org.providence.twitter;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.commons.configuration.AbstractConfiguration;
+import org.providence.common.RouteConstants;
 import org.providence.common.predicate.ContainsPredicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,7 @@ import org.providence.common.ConfigurationWrapper;
 public class TwitterRoute extends RouteBuilder {
     private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();
     private static final Logger logger = LoggerFactory.getLogger(TwitterRoute.class);
+    private static final String SOURCE_NAME = "Twitter";
 
     public void configure() {
         final String consumerKey = config.getString("twitter.consumerKey");
@@ -40,8 +42,9 @@ public class TwitterRoute extends RouteBuilder {
         logger.info("Created route from: {}", inRoute);
 
         from(inRoute)
-                .filter(new ContainsPredicate("Twitter"))
+                .filter(new ContainsPredicate(SOURCE_NAME))
                 .process(new TwitterProcessor())
+                .setProperty(RouteConstants.SOURCE, constant(SOURCE_NAME))
                 .to("seda:internal");
     }
 }

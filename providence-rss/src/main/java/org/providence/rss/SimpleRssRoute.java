@@ -17,6 +17,7 @@
 package org.providence.rss;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.providence.common.RouteConstants;
 import org.providence.rss.normalizer.RssNormalizer;
 
 public class SimpleRssRoute extends RouteBuilder {
@@ -37,6 +38,7 @@ public class SimpleRssRoute extends RouteBuilder {
                     .method(SimpleRssSplitter.class, "splitEntries")
                 .filter(new SimpleRssPredicate(name))
                 .process(new SimpleRssProcessor(rssNormalizer))
+                .setProperty(RouteConstants.SOURCE, constant(name))
                 .to("seda:internal");
     }
 }
