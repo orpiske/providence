@@ -57,7 +57,8 @@ public class InternalDatabaseBuilder implements TemplateBuilder {
                         JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
 
                         try {
-                            InputStreamResource resource = new InputStreamResource(this.getClass().getResourceAsStream("create-db.sql"));
+                            InputStreamResource resource = new InputStreamResource(this.getClass().getResourceAsStream(
+                                    "/org/providence/common/dao/builder/create-db.sql"));
 
                             ScriptUtils.executeSqlScript(ds.getConnection(), resource);
                         } catch (SQLException e) {
