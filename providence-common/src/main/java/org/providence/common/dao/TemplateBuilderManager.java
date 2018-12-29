@@ -14,19 +14,22 @@
  * limitations under the License.
  */
 
-package org.providence.common.routes;
+package org.providence.common.dao;
 
-import org.apache.camel.builder.RouteBuilder;
-import org.providence.common.RouteConstants;
+import org.providence.common.dao.builder.InternalDatabaseBuilder;
 
-public class InternalRoute extends RouteBuilder {
-    @Override
-    public void configure() throws Exception {
-        from("seda:internal?multipleConsumers=true")
-                .process(new InternalProcessor())
-                .choice()
-                    .when(exchange -> exchange.getProperty(RouteConstants.NEW_CONTENT, Boolean.class) == true)
-                    .to("seda:final")
-                .end();
+
+/**
+ * Manages building the template manager based on the configuration settings
+ */
+public final class TemplateBuilderManager {
+
+    /**
+     * Gets the template builder based on the configuration settings
+     * @return the template builder
+     */
+    static TemplateBuilder getTemplateBuilder() {
+        return new InternalDatabaseBuilder();
     }
+
 }

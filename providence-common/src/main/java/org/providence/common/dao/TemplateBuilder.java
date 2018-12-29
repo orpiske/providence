@@ -14,19 +14,21 @@
  * limitations under the License.
  */
 
-package org.providence.common.routes;
+package org.providence.common.dao;
 
-import org.apache.camel.builder.RouteBuilder;
-import org.providence.common.RouteConstants;
+import org.springframework.jdbc.core.JdbcTemplate;
 
-public class InternalRoute extends RouteBuilder {
-    @Override
-    public void configure() throws Exception {
-        from("seda:internal?multipleConsumers=true")
-                .process(new InternalProcessor())
-                .choice()
-                    .when(exchange -> exchange.getProperty(RouteConstants.NEW_CONTENT, Boolean.class) == true)
-                    .to("seda:final")
-                .end();
-    }
+/**
+ * The template builder interface can be used to implement different ways
+ * of creating the Spring JDBC template used to run the queries. It can be
+ * used to implement support for different databases as well as unit test
+ * cases for the DAO code
+ */
+public interface TemplateBuilder {
+
+    /**
+     * Build a Spring JDBC template object
+     * @return a Spring JDBC template object
+     */
+    JdbcTemplate build();
 }

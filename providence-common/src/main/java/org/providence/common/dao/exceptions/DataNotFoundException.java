@@ -14,19 +14,21 @@
  * limitations under the License.
  */
 
-package org.providence.common.routes;
+package org.providence.common.dao.exceptions;
 
-import org.apache.camel.builder.RouteBuilder;
-import org.providence.common.RouteConstants;
+/**
+ * Thrown whenever a DB data is not found
+ */
+public class DataNotFoundException extends Exception {
+    public DataNotFoundException(final String message) {
+        super(message);
+    }
 
-public class InternalRoute extends RouteBuilder {
-    @Override
-    public void configure() throws Exception {
-        from("seda:internal?multipleConsumers=true")
-                .process(new InternalProcessor())
-                .choice()
-                    .when(exchange -> exchange.getProperty(RouteConstants.NEW_CONTENT, Boolean.class) == true)
-                    .to("seda:final")
-                .end();
+    public DataNotFoundException(final String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public DataNotFoundException(final Throwable cause) {
+        super(cause);
     }
 }
