@@ -19,4 +19,5 @@ package org.providence.common;
 public class RouteConstants {
 
     public static final String SOURCE = "source";
+    public static final String FORMAT = "format";
 }

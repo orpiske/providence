@@ -19,6 +19,7 @@ package org.providence.rss;
 import com.sun.syndication.feed.synd.SyndEntryImpl;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.providence.common.RouteConstants;
 import org.providence.rss.normalizer.RssNormalizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +45,7 @@ public class SimpleRssProcessor implements Processor {
 
         String newBody = normalizer.normalize(entryBody);
 
-        exchange.setProperty("format", "formatted");
+        exchange.setProperty(RouteConstants.FORMAT, "formatted");
         exchange.getIn().setBody(newBody);
     }
 }
