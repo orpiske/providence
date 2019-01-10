@@ -29,11 +29,11 @@ public class ProvidenceCollectorMain {
         LogConfigurator.defaultForDaemons();
         CamelContext context = new DefaultCamelContext();
         try {
-//            context.addRoutes(new TwitterRoute());
-//            context.addRoutes(new SimpleRssRoute("Hacker News", "https://news.ycombinator.com/rss",
-//                    new HackerNewsNormalizer()));
-//            context.addRoutes(new SimpleRssRoute("Slashdot",
-//                    "http://rss.slashdot.org/Slashdot/slashdotMain/to", new SlashdotNormalizer()));
+            context.addRoutes(new TwitterRoute());
+            context.addRoutes(new SimpleRssRoute("Hacker News", "https://news.ycombinator.com/rss",
+                    new HackerNewsNormalizer()));
+            context.addRoutes(new SimpleRssRoute("Slashdot",
+                    "http://rss.slashdot.org/Slashdot/slashdotMain/to", new SlashdotNormalizer()));
             context.addRoutes(new RedditRoute());
 
             context.addRoutes(new InternalRoute());
