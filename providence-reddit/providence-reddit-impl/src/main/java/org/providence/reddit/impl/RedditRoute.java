@@ -28,7 +28,14 @@ public class RedditRoute extends RouteBuilder {
     private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();
     private static final Logger logger = LoggerFactory.getLogger(RedditRoute.class);
 
-    private static final String SOURCE_NAME = "Reddit";
+    private final String subReddit;
+    private final String fullSourceName;
+
+    public RedditRoute(final String subReddit) {
+        this.subReddit = subReddit;
+
+        fullSourceName = String.format("Reddit r/%s", subReddit);
+    }
 
     @Override
     public void configure() throws Exception {
@@ -37,15 +44,15 @@ public class RedditRoute extends RouteBuilder {
         final String clientId = config.getString("reddit.clientId");
         final String clientSecret = config.getString("reddit.clientSecret");
 
-        final String inRoute = String.format("reddit://subreddit?username=%s&password=%s&clientId=%s&clientSecret=%s&subReddit=java&pageSize=40&delay=3600",
-                username, password, clientId, clientSecret);
+        final String inRoute = String.format("reddit://subreddit?username=%s&password=%s&clientId=%s&clientSecret=%s&subReddit=%s&pageSize=40&delay=3600",
+                username, password, clientId, clientSecret, subReddit);
 
         logger.info("Created route from: {}", inRoute);
 
         from(inRoute)
                 .filter(new RedditPredicate())
                 .process(new RedditProcessor())
-                .setProperty(RouteConstants.SOURCE, constant(SOURCE_NAME))
+                .setProperty(RouteConstants.SOURCE, constant(fullSourceName))
                 .to("seda:internal");
     }
 }

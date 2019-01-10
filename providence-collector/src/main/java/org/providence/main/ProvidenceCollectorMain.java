@@ -34,7 +34,11 @@ public class ProvidenceCollectorMain {
                     new HackerNewsNormalizer()));
             context.addRoutes(new SimpleRssRoute("Slashdot",
                     "http://rss.slashdot.org/Slashdot/slashdotMain/to", new SlashdotNormalizer()));
-            context.addRoutes(new RedditRoute());
+            context.addRoutes(new RedditRoute("java"));
+            context.addRoutes(new RedditRoute("brdev"));
+            context.addRoutes(new RedditRoute("jboss"));
+            context.addRoutes(new RedditRoute("redhat"));
+            context.addRoutes(new RedditRoute("programming"));
 
             context.addRoutes(new InternalRoute());
             context.addRoutes(new PushoverRoute());
