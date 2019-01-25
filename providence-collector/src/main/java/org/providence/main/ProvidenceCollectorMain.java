@@ -1,7 +1,6 @@
 package org.providence.main;
 
-import org.apache.camel.CamelContext;
-import org.apache.camel.impl.DefaultCamelContext;
+import org.apache.camel.main.Main;
 import org.providence.common.ConfigurationWrapper;
 import org.providence.common.Constants;
 import org.providence.common.LogConfigurator;
@@ -27,31 +26,24 @@ public class ProvidenceCollectorMain {
         }
 
         LogConfigurator.defaultForDaemons();
-        CamelContext context = new DefaultCamelContext();
+        Main main = new Main();
+
         try {
-            context.addRoutes(new TwitterRoute());
-            context.addRoutes(new SimpleRssRoute("Hacker News", "https://news.ycombinator.com/rss",
+            main.addRouteBuilder(new TwitterRoute());
+            main.addRouteBuilder(new SimpleRssRoute("Hacker News", "https://news.ycombinator.com/rss",
                     new HackerNewsNormalizer()));
-            context.addRoutes(new SimpleRssRoute("Slashdot",
+            main.addRouteBuilder(new SimpleRssRoute("Slashdot",
                     "http://rss.slashdot.org/Slashdot/slashdotMain/to", new SlashdotNormalizer()));
-            context.addRoutes(new RedditRoute("java"));
-            context.addRoutes(new RedditRoute("brdev"));
-            context.addRoutes(new RedditRoute("jboss"));
-            context.addRoutes(new RedditRoute("redhat"));
-            context.addRoutes(new RedditRoute("programming"));
+            main.addRouteBuilder(new RedditRoute("java"));
+            main.addRouteBuilder(new RedditRoute("brdev"));
+            main.addRouteBuilder(new RedditRoute("jboss"));
+            main.addRouteBuilder(new RedditRoute("redhat"));
+            main.addRouteBuilder(new RedditRoute("programming"));
 
-            context.addRoutes(new InternalRoute());
-            context.addRoutes(new PushoverRoute());
+            main.addRouteBuilder(new InternalRoute());
+            main.addRouteBuilder(new PushoverRoute());
 
-            context.start();
-            while (true) {
-                try {
-                    Thread.sleep(10000);
-                }
-                catch (InterruptedException ie) {
-                    context.stop();
-                }
-            }
+            main.run();
 
         } catch (Exception e) {
             System.err.println("Unable to add route: " + e.getMessage());
