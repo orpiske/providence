@@ -53,6 +53,7 @@
         <module>providence-pushover</module>
         <module>providence-rss</module>
         <module>providence-reddit</module>
+        <module>providence-rest</module>
     </modules>
 
     <profiles>

@@ -20,7 +20,10 @@ import org.providence.common.dao.dto.Shared;
 import org.providence.common.dao.exceptions.DataNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.SingleColumnRowMapper;
+
+import java.util.List;
 
 public class SharedDao extends AbstractDao {
     private static final Logger logger = LoggerFactory.getLogger(SharedDao.class);
@@ -45,5 +48,9 @@ public class SharedDao extends AbstractDao {
     public void insert(final Shared shared) {
         runEmptyInsert("insert into shared(shared_source, shared_format, shared_text) " +
                 "values(:sharedSource, :sharedFormat, :sharedText)", shared);
+    }
+
+    public List<Shared> fetch() throws DataNotFoundException {
+        return runQueryMany("select * from shared", new BeanPropertyRowMapper<>(Shared.class));
     }
 }

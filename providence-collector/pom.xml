@@ -47,6 +47,12 @@
             <artifactId>providence-reddit-impl</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.providence</groupId>
+            <artifactId>providence-rest</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

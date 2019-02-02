@@ -7,6 +7,8 @@ import org.providence.common.LogConfigurator;
 import org.providence.common.routes.InternalRoute;
 import org.providence.pushover.PushoverRoute;
 import org.providence.reddit.impl.RedditRoute;
+import org.providence.rest.CuratedRoute;
+import org.providence.rest.CuratedService;
 import org.providence.rss.SimpleRssRoute;
 import org.providence.rss.normalizer.HackerNewsNormalizer;
 import org.providence.rss.normalizer.SlashdotNormalizer;
@@ -42,6 +44,9 @@ public class ProvidenceCollectorMain {
 
             main.addRouteBuilder(new InternalRoute());
             main.addRouteBuilder(new PushoverRoute());
+
+            main.bind("curated", new CuratedService());
+            main.addRouteBuilder(new CuratedRoute());
 
             main.run();
 
