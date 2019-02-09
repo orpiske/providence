@@ -18,26 +18,21 @@ package org.providence.common.predicate;
 
 import org.apache.camel.Exchange;
 import org.apache.commons.configuration.AbstractConfiguration;
-import org.apache.commons.lang.StringUtils;
 import org.providence.common.ConfigurationWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+
 public class MatchUtils {
     private static final Logger logger = LoggerFactory.getLogger(MatchUtils.class);
     private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();
-    private static final String[] keywords = config.getStringArray("keywords");
 
+    @Deprecated
     public static boolean keywordMatch(Exchange exchange, String stringBody, String source) {
-        for (String keyword : keywords) {
-            if (StringUtils.containsIgnoreCase(stringBody, keyword)) {
-                exchange.setProperty("title", String.format("Keyword %s matched on %s", keyword, source));
-                logger.info("Matched keyword {} for content", keyword);
+        MatchEngine matchEngine = DefaultMatchEngine.getInstance();
+        MatchAction matchAction = new SourcePropertyAction(exchange, source);
 
-                return true;
-            }
-        }
-
-        return false;
+        return matchEngine.keywordMatch(stringBody, Arrays.asList(matchAction));
     }
 }
