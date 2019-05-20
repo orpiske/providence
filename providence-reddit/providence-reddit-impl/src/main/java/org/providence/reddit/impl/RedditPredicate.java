@@ -19,12 +19,29 @@ package org.providence.reddit.impl;
 import net.dean.jraw.models.Submission;
 import org.apache.camel.Exchange;
 import org.apache.camel.Predicate;
+import org.apache.commons.configuration.AbstractConfiguration;
+import org.apache.commons.lang.StringUtils;
+import org.providence.common.ConfigurationWrapper;
 import org.providence.common.predicate.MatchUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 public class RedditPredicate implements Predicate {
     private static final Logger logger = LoggerFactory.getLogger(RedditPredicate.class);
+    private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();
+
+    private boolean excludesMatch(String stringBody, String subReddit, String[] keywords) {
+        for (String keyword : keywords) {
+            if (StringUtils.containsIgnoreCase(stringBody, keyword)) {
+
+                logger.info("Ignoring keyword {} for content on {}", keyword, subReddit);
+
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public boolean matches(Exchange exchange) {
@@ -37,7 +54,12 @@ public class RedditPredicate implements Predicate {
 
         String stringBody = inBody.getTitle();
         if (MatchUtils.keywordMatch(exchange, stringBody, "Reddit")) {
-            return true;
+            String subReddit = inBody.getSubreddit();
+            String[] excludes = config.getStringArray("reddit." + subReddit + ".excludes");
+
+            if (!excludesMatch(stringBody, subReddit, excludes)) {
+                return true;
+            }
         }
 
         if (logger.isTraceEnabled()) {
