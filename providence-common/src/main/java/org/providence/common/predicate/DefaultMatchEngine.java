@@ -49,7 +49,7 @@ public class DefaultMatchEngine implements MatchEngine {
 
                 for (String excluded : excludes) {
                     if  (StringUtils.containsIgnoreCase(stringBody, excluded)) {
-                        logger.info("Matched keyword {} for content but it is excluded by {}", excluded);
+                        logger.info("Matched keyword {} for content but it is excluded by {}", keyword, excluded);
                         return false;
                     }
                 }
