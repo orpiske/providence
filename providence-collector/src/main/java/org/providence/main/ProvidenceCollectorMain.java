@@ -1,6 +1,7 @@
 package org.providence.main;
 
 import org.apache.camel.main.Main;
+import org.apache.commons.configuration.AbstractConfiguration;
 import org.providence.common.ConfigurationWrapper;
 import org.providence.common.Constants;
 import org.providence.common.LogConfigurator;
@@ -31,16 +32,19 @@ public class ProvidenceCollectorMain {
         Main main = new Main();
 
         try {
+            AbstractConfiguration config = ConfigurationWrapper.getConfig();
+
             main.addRouteBuilder(new TwitterRoute());
             main.addRouteBuilder(new SimpleRssRoute("Hacker News", "https://news.ycombinator.com/rss",
                     new HackerNewsNormalizer()));
             main.addRouteBuilder(new SimpleRssRoute("Slashdot",
                     "http://rss.slashdot.org/Slashdot/slashdotMain/to", new SlashdotNormalizer()));
-            main.addRouteBuilder(new RedditRoute("java"));
-            main.addRouteBuilder(new RedditRoute("brdev"));
-            main.addRouteBuilder(new RedditRoute("jboss"));
-            main.addRouteBuilder(new RedditRoute("redhat"));
-            main.addRouteBuilder(new RedditRoute("programming"));
+
+            String[] subReddits = config.getStringArray("reddit.subreddits");
+
+            for (String subRedit : subReddits) {
+                main.addRouteBuilder(new RedditRoute(subRedit));
+            }
 
             main.addRouteBuilder(new InternalRoute());
             main.addRouteBuilder(new PushoverRoute());
