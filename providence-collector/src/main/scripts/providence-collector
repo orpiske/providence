@@ -57,5 +57,5 @@ mainClass="org.providence.main.ProvidenceCollectorMain"
 classpath="$(echo "${installDir}"/bin/*providence-collector-*.jar)"
 classpath="${classpath// /:}"
 
-java ${PROVIDENCE_JVM_FLAGS} -classpath "${classpath}" -Dorg.providence.home="${installDir}" \
+nice -n 15 java ${PROVIDENCE_JVM_FLAGS} -classpath "${classpath}" -Dorg.providence.home="${installDir}" \
     ${PROVIDENCE_JAVA_OPTS} "${mainClass}" "$@"
