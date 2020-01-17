@@ -31,13 +31,13 @@
         <dependency>
             <groupId>org.providence</groupId>
             <artifactId>providence-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.providence</groupId>
             <artifactId>providence-camel-reddit</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
