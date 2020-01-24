@@ -16,7 +16,7 @@
 
 package org.providence.rss;
 
-import com.sun.syndication.feed.synd.SyndFeedImpl;
+import com.rometools.rome.feed.synd.SyndFeedImpl;
 
 import java.util.List;
 

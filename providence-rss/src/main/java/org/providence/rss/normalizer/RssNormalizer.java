@@ -16,7 +16,8 @@
 
 package org.providence.rss.normalizer;
 
-import com.sun.syndication.feed.synd.SyndEntryImpl;
+
+import com.rometools.rome.feed.synd.SyndEntryImpl;
 import org.providence.common.normalizer.Normalizer;
 
 public abstract class RssNormalizer implements Normalizer<String, SyndEntryImpl> {

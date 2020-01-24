@@ -16,7 +16,7 @@
 
 package org.providence.rss;
 
-import com.sun.syndication.feed.synd.SyndEntryImpl;
+import com.rometools.rome.feed.synd.SyndEntryImpl;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.providence.common.RouteConstants;

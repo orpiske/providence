@@ -10,7 +10,7 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>
-        <camel.version>2.23.4</camel.version>
+        <camel.version>3.0.1</camel.version>
         <deltaspike-version>1.7.2</deltaspike-version>
         <weld-version>2.4.7.Final</weld-version>
         <log4j.version>1.7.25</log4j.version>
