@@ -18,12 +18,11 @@ package org.providence.twitter;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.commons.configuration.AbstractConfiguration;
+import org.providence.common.ConfigurationWrapper;
 import org.providence.common.RouteConstants;
 import org.providence.common.predicate.ContainsPredicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.providence.common.ConfigurationWrapper;
 
 public class TwitterRoute extends RouteBuilder {
     private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();

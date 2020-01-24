@@ -19,6 +19,7 @@ package org.providence.camel.reddit;
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.http.NetworkAdapter;
 import net.dean.jraw.http.OkHttpNetworkAdapter;
+import net.dean.jraw.http.UserAgent;
 import net.dean.jraw.models.Listing;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.models.SubredditSort;
@@ -27,8 +28,6 @@ import net.dean.jraw.oauth.OAuthHelper;
 import net.dean.jraw.pagination.DefaultPaginator;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-
-import net.dean.jraw.http.UserAgent;
 import org.apache.camel.support.ScheduledPollConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
