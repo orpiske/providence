@@ -35,7 +35,7 @@ public class TwitterProcessor implements Processor {
 
         exchange.setProperty(RouteConstants.FORMAT, "raw");
 
-        String refLink = String.format("https://twitter.com/%s/status/%d", status.getUser().getScreenName(), status.getId());
+        String refLink = String.format("twitter://status?id=%d", status.getId());
         exchange.setProperty("reference", refLink);
     }
 }
