@@ -37,7 +37,7 @@ public class TwitterRoute extends RouteBuilder {
         final String accessTokenSecret = config.getString("twitter.accessTokenSecret");
         final int interval = config.getInt("twitter.interval", 1900000);
 
-        final String inRoute = String.format("twitter://timeline/home?type=polling&delay=%d&consumerKey=%s&consumerSecret=%s&accessToken=%s&accessTokenSecret=%s",
+        final String inRoute = String.format("twitter-timeline://user?user=otavio021&type=polling&delay=%d&consumerKey=%s&consumerSecret=%s&accessToken=%s&accessTokenSecret=%s",
                 interval, consumerKey, consumerSecret, accessToken, accessTokenSecret);
 
         logger.info("Created route from: {}", inRoute);

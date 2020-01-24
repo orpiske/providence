@@ -106,7 +106,7 @@
 
             <dependency>
                 <groupId>org.apache.camel</groupId>
-                <artifactId>camel-twitter</artifactId>
+                <artifactId>camel-twitter-starter</artifactId>
                 <version>${camel.version}</version>
             </dependency>
 
