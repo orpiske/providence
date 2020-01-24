@@ -19,11 +19,11 @@ package org.providence.camel.reddit;
 import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
-import org.apache.camel.impl.DefaultEndpoint;
 import org.apache.camel.spi.Metadata;
 import org.apache.camel.spi.UriEndpoint;
 import org.apache.camel.spi.UriParam;
 import org.apache.camel.spi.UriPath;
+import org.apache.camel.support.DefaultEndpoint;
 
 @UriEndpoint(
         firstVersion = "0.0.1-SNAPSHOT",
@@ -35,7 +35,7 @@ import org.apache.camel.spi.UriPath;
 )
 public class RedditEndpoint extends DefaultEndpoint {
 
-    @UriPath @Metadata(required = "true")
+    @UriPath @Metadata(required = true)
     private String resource;
 
     @UriParam
@@ -64,10 +64,6 @@ public class RedditEndpoint extends DefaultEndpoint {
 
     public RedditEndpoint(String uri, RedditComponent component) {
         super(uri, component);
-    }
-
-    public RedditEndpoint(String endpointUri) {
-        super(endpointUri);
     }
 
     @Override
