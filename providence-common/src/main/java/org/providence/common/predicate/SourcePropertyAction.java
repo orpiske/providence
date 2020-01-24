@@ -29,6 +29,8 @@ public class SourcePropertyAction implements MatchAction {
 
     @Override
     public void execute(String keyword) {
-        exchange.setProperty("title", String.format("Keyword %s matched on %s", keyword, source));
+//        exchange.getContext().getPropertiesComponent().
+        exchange.getIn().setHeader("title", String.format("Keyword %s matched on %s", keyword, source));
+//        exchange.setProperty("title", String.format("Keyword %s matched on %s", keyword, source));
     }
 }

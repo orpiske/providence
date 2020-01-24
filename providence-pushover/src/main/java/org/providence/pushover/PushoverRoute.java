@@ -42,8 +42,8 @@ public class PushoverRoute extends RouteBuilder {
         final String appToken = config.getString("pushover.appToken");
         final String userToken = config.getString("pushover.userToken");
 
-        final String formattedBody = String.format("token=%s&user=%s&title=${property.title}&message=${in.body}&html=1", appToken, userToken);
-        final String rawBody = String.format("token=%s&user=%s&title=${property.title}&message=${in.body}", appToken, userToken);
+        final String formattedBody = String.format("token=%s&user=%s&title=${in.headers.title}&message=${in.body}&html=1", appToken, userToken);
+        final String rawBody = String.format("token=%s&user=%s&title=${in.headers.title}&message=${in.body}", appToken, userToken);
 
         errorHandler(defaultErrorHandler().onExceptionOccurred(new PushoverError()));
 
