@@ -33,29 +33,28 @@ public class ProvidenceCollectorMain {
             System.exit(1);
         }
 
-        LogConfigurator.defaultForDaemons();
         Main main = new Main();
 
         try {
             AbstractConfiguration config = ConfigurationWrapper.getConfig();
 
-            main.addRouteBuilder(new TwitterRoute());
-            main.addRouteBuilder(new SimpleRssRoute("Hacker News", "https://news.ycombinator.com/rss",
+            main.addRoutesBuilder(new TwitterRoute());
+            main.addRoutesBuilder(new SimpleRssRoute("Hacker News", "https://news.ycombinator.com/rss",
                     new HackerNewsNormalizer()));
-            main.addRouteBuilder(new SimpleRssRoute("Slashdot",
+            main.addRoutesBuilder(new SimpleRssRoute("Slashdot",
                     "http://rss.slashdot.org/Slashdot/slashdotMain/to", new SlashdotNormalizer()));
 
             String[] subReddits = config.getStringArray("reddit.subreddits");
 
             for (String subRedit : subReddits) {
-                main.addRouteBuilder(new RedditRoute(subRedit));
+                main.addRoutesBuilder(new RedditRoute(subRedit));
             }
 
-            main.addRouteBuilder(new InternalRoute());
-            main.addRouteBuilder(new PushoverRoute());
+            main.addRoutesBuilder(new InternalRoute());
+            main.addRoutesBuilder(new PushoverRoute());
 
             main.bind("curated", new CuratedService());
-            main.addRouteBuilder(new CuratedRoute());
+            main.addRoutesBuilder(new CuratedRoute());
 
             main.run();
 
