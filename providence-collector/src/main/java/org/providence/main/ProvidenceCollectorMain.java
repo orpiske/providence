@@ -16,6 +16,11 @@ import org.providence.rss.normalizer.SlashdotNormalizer;
 import org.providence.twitter.TwitterRoute;
 
 public class ProvidenceCollectorMain {
+
+    static {
+        LogConfigurator.defaultForDaemons();
+    }
+
     public static void main(String[] args) {
         try {
             ConfigurationWrapper.initConfiguration(Constants.PROVIDENCE_CONFIG_DIR, "providence-twitter.properties");
