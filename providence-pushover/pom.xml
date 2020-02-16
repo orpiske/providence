@@ -35,12 +35,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-http</artifactId>
+            <groupId>org.apache.camel.quarkus</groupId>
+            <artifactId>camel-quarkus-http</artifactId>
         </dependency>
-
-
     </dependencies>
-
 
 </project>

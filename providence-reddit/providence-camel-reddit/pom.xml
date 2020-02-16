@@ -29,9 +29,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-core</artifactId>
-            <version>${camel.version}</version>
+            <groupId>org.apache.camel.quarkus</groupId>
+            <artifactId>camel-quarkus-core</artifactId>
         </dependency>
 
         <dependency>

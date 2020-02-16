@@ -10,7 +10,6 @@
     <version>0.0.2-SNAPSHOT</version>
 
     <properties>
-        <camel.version>3.0.1</camel.version>
         <deltaspike-version>1.7.2</deltaspike-version>
         <weld-version>2.4.7.Final</weld-version>
         <log4j.version>1.7.25</log4j.version>
@@ -20,6 +19,11 @@
         <h2.version>1.4.197</h2.version>
         <jraw.version>1.1.0</jraw.version>
         <jaxb-api.version>2.3.0</jaxb-api.version>
+
+        <quarkus-plugin.version>1.2.0.Final</quarkus-plugin.version>
+        <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
+        <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
+        <quarkus.platform.version>1.2.0.Final</quarkus.platform.version>
     </properties>
 
     <repositories>
@@ -40,6 +44,29 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>${quarkus.platform.group-id}</groupId>
+                <artifactId>${quarkus.platform.artifact-id}</artifactId>
+                <version>${quarkus.platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-resteasy</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-junit5</artifactId>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.rest-assured</groupId>
+                <artifactId>rest-assured</artifactId>
+                <scope>test</scope>
+            </dependency>
+
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
@@ -65,48 +92,36 @@
             </dependency>
 
             <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-core</artifactId>
-                <version>${camel.version}</version>
+                <groupId>org.apache.camel.quarkus</groupId>
+                <artifactId>camel-quarkus-core</artifactId>
             </dependency>
 
             <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-main</artifactId>
-                <version>${camel.version}</version>
+                <groupId>org.apache.camel.quarkus</groupId>
+                <artifactId>camel-quarkus-http</artifactId>
             </dependency>
 
             <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-http</artifactId>
-                <version>${camel.version}</version>
+                <groupId>org.apache.camel.quarkus</groupId>
+                <artifactId>camel-quarkus-jetty</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel.quarkus</groupId>
+                <artifactId>camel-quarkus-jackson</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel.quarkus</groupId>
+                <artifactId>camel-quarkus-swagger-java</artifactId>
             </dependency>
 
             <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-jetty</artifactId>
-                <version>${camel.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-jackson</artifactId>
-                <version>${camel.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-swagger-java</artifactId>
-                <version>${camel.version}</version>
+                <groupId>org.apache.camel.quarkus</groupId>
+                <artifactId>camel-quarkus-rss</artifactId>
             </dependency>
 
             <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-rss</artifactId>
-                <version>${camel.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-twitter</artifactId>
+                <groupId>org.apache.camel.quarkus</groupId>
+                <artifactId>camel-quarkus-twitter</artifactId>
                 <version>${camel.version}</version>
             </dependency>
 
@@ -117,9 +132,8 @@
             </dependency>
 
             <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-properties</artifactId>
-                <version>${camel.version}</version>
+                <groupId>org.apache.camel.quarkus</groupId>
+                <artifactId>camel-quarkus-properties</artifactId>
             </dependency>
 
             <dependency>

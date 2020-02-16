@@ -29,8 +29,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-rss</artifactId>
+            <groupId>org.apache.camel,quarkus</groupId>
+            <artifactId>camel-quarkus-rss</artifactId>
         </dependency>
 
         <dependency>
