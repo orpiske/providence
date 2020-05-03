@@ -18,6 +18,8 @@ package org.providence.twitter;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.apache.commons.configuration.AbstractConfiguration;
+import org.providence.common.ConfigurationWrapper;
 import org.providence.common.RouteConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,7 @@ import twitter4j.Status;
 
 public class TwitterProcessor implements Processor {
     private static final Logger logger = LoggerFactory.getLogger(TwitterProcessor.class);
+    private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();
 
     public void process(Exchange exchange) {
         Status status = exchange.getIn().getBody(Status.class);
@@ -35,7 +38,8 @@ public class TwitterProcessor implements Processor {
 
         exchange.setProperty(RouteConstants.FORMAT, "raw");
 
-        String refLink = String.format("twitter://status?id=%d", status.getId());
+        String twitterHandler = config.getString("twitter.handler", "twitter");
+        String refLink = String.format("%s://status?id=%d", twitterHandler, status.getId());
         exchange.setProperty("reference", refLink);
     }
 }
