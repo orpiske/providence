@@ -23,16 +23,18 @@ import org.apache.camel.model.rest.RestBindingMode;
 public class CuratedRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        restConfiguration("jetty")
+        restConfiguration()
+                .component("jetty")
                 .contextPath("api")
-                .apiProperty("api.title", "Grettings")
                 .bindingMode(RestBindingMode.json)
                 .enableCORS(true)
                 .port(9096);
 
         // define the rest service
-        rest("/curated/all").produces("application/json")
-                .get().to("bean:curated");
+        rest("/")
+                .get("/curated/all").to("direct:curated");
+
+        from(":direct:curated").to("bean:curated");
 
 
     }
