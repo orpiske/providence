@@ -24,6 +24,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -141,7 +142,7 @@ public abstract class AbstractDao extends NamedParameterJdbcDaoSupport {
      * @param bean the bean with the data to insert
      */
     protected void runEmptyInsert(final String query, final Object bean) {
-        EasyRunner.runEmptyInsert(getNamedParameterJdbcTemplate(), query, bean);
+        EasyRunner.runEmptyInsert(Objects.requireNonNull(getNamedParameterJdbcTemplate()), query, bean);
     }
 
 
@@ -152,7 +153,7 @@ public abstract class AbstractDao extends NamedParameterJdbcDaoSupport {
      * @return the ID of the record updated
      */
     protected int runInsert(final String query, final Object bean) {
-        return EasyRunner.runInsert(getNamedParameterJdbcTemplate(), query, bean);
+        return EasyRunner.runInsert(Objects.requireNonNull(getNamedParameterJdbcTemplate()), query, bean);
     }
 
 }
