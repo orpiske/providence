@@ -62,7 +62,7 @@ function start() {
 function stop() {
     for pid in $(pgrep -f ".*java.*bin/providence-collector.*") ; do
         echo "Killing Providence collector ${pid}"
-        kill -TERM ${pid}
+        kill -TERM "${pid}"
     done
 }
 
