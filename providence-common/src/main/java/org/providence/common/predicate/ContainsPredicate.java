@@ -32,14 +32,13 @@ public class ContainsPredicate implements Predicate {
 
     @Override
     public boolean matches(Exchange exchange) {
-        Object inBody = exchange.getIn().getBody(String.class);
+        String stringBody = exchange.getIn().getBody(String.class);
 
-        if (inBody == null) {
+        if (stringBody == null) {
             logger.debug("Discarding match because the body is null");
             return false;
         }
 
-        String stringBody = (String) inBody;
         if (MatchUtils.keywordMatch(exchange, stringBody, source)) {
             return true;
         }
