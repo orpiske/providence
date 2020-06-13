@@ -23,6 +23,7 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 /**
@@ -47,7 +48,7 @@ public class ConfigurationWrapper {
 	 * @throws ConfigurationException if the configuration file contains errors
 	 */
 	public static void initConfiguration(final String configDir,
-			final String fileName) throws FileNotFoundException,
+			final String fileName) throws IOException,
 			ConfigurationException {
 		if (configDir == null) {
 			throw new FileNotFoundException(
@@ -67,7 +68,9 @@ public class ConfigurationWrapper {
 			config.addConfiguration(userConfiguration);
 		}
 		else {
-			userFile.getParentFile().mkdirs();
+			if (!userFile.getParentFile().mkdirs()) {
+				throw new IOException("Unable to create user directories");
+			}
 		}
 
 
