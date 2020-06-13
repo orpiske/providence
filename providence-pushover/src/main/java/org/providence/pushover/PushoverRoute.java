@@ -29,7 +29,7 @@ public class PushoverRoute extends RouteBuilder {
     private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();
     private static final Logger logger = LoggerFactory.getLogger(PushoverRoute.class);
 
-    class PushoverError implements ErrorHandler {
+    static class PushoverError implements ErrorHandler {
         @Override
         public void process(Exchange exchange) {
             logger.error("Failed to process message {} from {}", exchange.getIn().getMessageId(),
