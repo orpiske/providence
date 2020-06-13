@@ -32,10 +32,7 @@ public class CuratedRoute extends RouteBuilder {
 
         // define the rest service
         rest("/")
-                .get("/curated/all").to("direct:curated");
-
-        from(":direct:curated").to("bean:curated");
-
+                .get("/curated/all").to("bean:curated");
 
     }
 }
