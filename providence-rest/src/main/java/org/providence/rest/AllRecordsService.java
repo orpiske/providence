@@ -23,8 +23,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class CuratedService {
-    private static final Logger logger = LoggerFactory.getLogger(CuratedService.class);
+public class AllRecordsService {
+    private static final Logger logger = LoggerFactory.getLogger(AllRecordsService.class);
     private SharedDao sharedDao = new SharedDao();
 
     public List<Shared> all() {

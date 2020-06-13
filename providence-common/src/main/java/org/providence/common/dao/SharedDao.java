@@ -53,4 +53,8 @@ public class SharedDao extends AbstractDao {
     public List<Shared> fetch() throws DataNotFoundException {
         return runQueryMany("select * from shared", new BeanPropertyRowMapper<>(Shared.class));
     }
+
+    public List<Shared> today() throws DataNotFoundException {
+        return runQueryMany("select * from shared where shared_date >= CURRENT_DATE()", new BeanPropertyRowMapper<>(Shared.class));
+    }
 }

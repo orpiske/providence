@@ -16,24 +16,25 @@
 
 package org.providence.rest;
 
-import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.model.rest.RestBindingMode;
+import org.providence.common.dao.SharedDao;
+import org.providence.common.dao.dto.Shared;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.List;
 
-public class CuratedRoute extends RouteBuilder {
-    @Override
-    public void configure() throws Exception {
-        restConfiguration()
-                .component("jetty")
-                .contextPath("api")
-                .bindingMode(RestBindingMode.json)
-                .enableCORS(true)
-                .port(9096);
+public class TodaySharedService {
+    private static final Logger logger = LoggerFactory.getLogger(TodaySharedService.class);
+    private SharedDao sharedDao = new SharedDao();
 
-        // define the rest service
-        rest("/")
-                .get("/curated/all").to("bean:all")
-                .get("/curated/today").to("bean:today");
+    public List<Shared> today() {
+        try {
+            return sharedDao.today();
+        }
+        catch (Exception e) {
+            logger.error("Unable to fetch records: {}", e.getMessage());
 
+            return null;
+        }
     }
 }
