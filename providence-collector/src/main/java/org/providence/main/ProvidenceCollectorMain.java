@@ -47,8 +47,8 @@ public class ProvidenceCollectorMain {
 
             String[] subReddits = config.getStringArray("reddit.subreddits");
 
-            for (String subRedit : subReddits) {
-                main.configure().addRoutesBuilder(new RedditRoute(subRedit));
+            for (String subReddit : subReddits) {
+                main.configure().addRoutesBuilder(new RedditRoute(subReddit));
             }
 
             main.configure().addRoutesBuilder(new InternalRoute());
