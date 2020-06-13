@@ -27,6 +27,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Utility code to run DB queries. Wrapper for Spring JDBC code
@@ -171,6 +172,6 @@ public final class EasyRunner {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(query, beanParameters, keyHolder);
-        return keyHolder.getKey().intValue();
+        return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 }
