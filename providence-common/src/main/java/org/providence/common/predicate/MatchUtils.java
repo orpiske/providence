@@ -22,7 +22,7 @@ import org.providence.common.ConfigurationWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 public class MatchUtils {
     private static final Logger logger = LoggerFactory.getLogger(MatchUtils.class);
@@ -33,6 +33,6 @@ public class MatchUtils {
         MatchEngine matchEngine = DefaultMatchEngine.getInstance();
         MatchAction matchAction = new SourcePropertyAction(exchange, source);
 
-        return matchEngine.keywordMatch(stringBody, Arrays.asList(matchAction));
+        return matchEngine.keywordMatch(stringBody, Collections.singletonList(matchAction));
     }
 }
