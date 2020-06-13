@@ -25,7 +25,7 @@ import java.util.List;
 
 public class AllRecordsService {
     private static final Logger logger = LoggerFactory.getLogger(AllRecordsService.class);
-    private SharedDao sharedDao = new SharedDao();
+    private final SharedDao sharedDao = new SharedDao();
 
     public List<Shared> all() {
         try {

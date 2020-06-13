@@ -37,7 +37,7 @@ public class RedditRoute extends RouteBuilder {
     }
 
     @Override
-    public void configure() throws Exception {
+    public void configure() {
         final String username = config.getString("reddit.username");
         final String password = config.getString("reddit.password");
         final String clientId = config.getString("reddit.clientId");

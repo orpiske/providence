@@ -21,11 +21,11 @@ import org.providence.common.RouteConstants;
 
 public class InternalRoute extends RouteBuilder {
     @Override
-    public void configure() throws Exception {
+    public void configure() {
         from("seda:internal?multipleConsumers=true")
                 .process(new InternalProcessor())
                 .choice()
-                    .when(exchange -> exchange.getProperty(RouteConstants.NEW_CONTENT, Boolean.class) == true)
+                    .when(exchange -> exchange.getProperty(RouteConstants.NEW_CONTENT, Boolean.class))
                     .to("seda:final")
                 .end();
     }

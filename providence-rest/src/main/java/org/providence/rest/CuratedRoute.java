@@ -22,7 +22,7 @@ import org.apache.camel.model.rest.RestBindingMode;
 
 public class CuratedRoute extends RouteBuilder {
     @Override
-    public void configure() throws Exception {
+    public void configure() {
         restConfiguration()
                 .component("jetty")
                 .contextPath("api")

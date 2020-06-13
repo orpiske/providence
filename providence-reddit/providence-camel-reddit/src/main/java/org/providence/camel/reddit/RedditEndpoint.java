@@ -67,13 +67,13 @@ public class RedditEndpoint extends DefaultEndpoint {
     }
 
     @Override
-    public Producer createProducer() throws Exception {
+    public Producer createProducer() {
         throw new UnsupportedOperationException(String.format("You cannot send messages to this endpoint: %s",
                 getEndpointUri()));
     }
 
     @Override
-    public Consumer createConsumer(Processor processor) throws Exception {
+    public Consumer createConsumer(Processor processor) {
         return new RedditConsumer(this, processor);
     }
 

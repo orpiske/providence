@@ -21,7 +21,7 @@ import org.apache.camel.Processor;
 
 public class AddReferenceUrlProcessor implements Processor {
     @Override
-    public void process(Exchange exchange) throws Exception {
+    public void process(Exchange exchange) {
         String body = exchange.getIn().getBody(String.class);
 
         Object referenceUrl = exchange.getProperty("reference");

@@ -26,14 +26,14 @@ import org.slf4j.LoggerFactory;
 
 public class SimpleRssProcessor implements Processor {
     private static final Logger logger = LoggerFactory.getLogger(SimpleRssProcessor.class);
-    private RssNormalizer normalizer;
+    private final RssNormalizer normalizer;
 
     public SimpleRssProcessor(RssNormalizer normalizer) {
         this.normalizer = normalizer;
     }
 
     @Override
-    public void process(Exchange exchange) throws Exception {
+    public void process(Exchange exchange) {
         SyndEntryImpl entryBody = SimpleRssUtil.extractEntry(exchange);
         if (entryBody == null) {
             return;

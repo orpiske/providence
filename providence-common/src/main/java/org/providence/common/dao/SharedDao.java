@@ -38,7 +38,7 @@ public class SharedDao extends AbstractDao {
                 return -1;
             }
 
-            return ret.intValue();
+            return ret;
         }
         catch (DataNotFoundException e) {
             return 0;

@@ -32,7 +32,7 @@ public class SimpleRssRoute extends RouteBuilder {
     }
 
     @Override
-    public void configure() throws Exception {
+    public void configure() {
         from("rss:" + address + "?splitEntries=false&delay=1800000")
                 .split()
                     .method(SimpleRssSplitter.class, "splitEntries")

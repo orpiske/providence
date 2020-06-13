@@ -66,7 +66,7 @@ public class RedditConsumer extends ScheduledPollConsumer {
     }
 
     @Override
-    protected int poll() throws Exception {
+    protected int poll() {
         Credentials credentials = Credentials.script(endpoint.getUsername(), endpoint.getPassword(),
                 endpoint.getClientId(), endpoint.getClientSecret());
 
@@ -83,7 +83,7 @@ public class RedditConsumer extends ScheduledPollConsumer {
 
         Listing<Submission> firstPage = pgn.next();
 
-        firstPage.forEach(submission -> doProcess(submission));
+        firstPage.forEach(this::doProcess);
 
         return 0;
     }

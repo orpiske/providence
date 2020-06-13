@@ -38,7 +38,7 @@ public class PushoverRoute extends RouteBuilder {
     }
 
     @Override
-    public void configure() throws Exception {
+    public void configure() {
         final String appToken = config.getString("pushover.appToken");
         final String userToken = config.getString("pushover.userToken");
 

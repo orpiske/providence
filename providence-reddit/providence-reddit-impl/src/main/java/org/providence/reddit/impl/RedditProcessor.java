@@ -28,7 +28,7 @@ public class RedditProcessor implements Processor {
 
 
     @Override
-    public void process(Exchange exchange) throws Exception {
+    public void process(Exchange exchange) {
         Submission submission = exchange.getIn().getBody(Submission.class);
 
         exchange.getIn().setBody(submission.getTitle());
