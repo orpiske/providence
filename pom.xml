@@ -11,8 +11,6 @@
 
     <properties>
         <camel.version>3.4.2</camel.version>
-        <deltaspike-version>1.7.2</deltaspike-version>
-        <weld-version>2.4.7.Final</weld-version>
         <log4j.version>1.7.25</log4j.version>
         <commons-io.version>1.10</commons-io.version>
         <commons-dbcp2.version>2.7.0</commons-dbcp2.version>
