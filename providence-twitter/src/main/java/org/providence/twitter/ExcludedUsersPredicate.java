@@ -25,7 +25,7 @@ public class ExcludedUsersPredicate implements Predicate {
     static {
         AbstractConfiguration config = ConfigurationWrapper.getConfig();
 
-        excludes = config.getStringArray("twitter.excludes");
+        excludes = config.getStringArray("twitter.excluded.users");
     }
 
     @Override
