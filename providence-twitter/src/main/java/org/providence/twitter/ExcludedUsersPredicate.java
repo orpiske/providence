@@ -1,14 +1,11 @@
 package org.providence.twitter;
 
-import java.util.Collections;
-
 import org.apache.camel.Exchange;
 import org.apache.camel.Predicate;
 import org.apache.commons.configuration.AbstractConfiguration;
 import org.providence.common.ConfigurationWrapper;
 import org.providence.common.predicate.ContainsPredicate;
 import org.providence.common.predicate.DefaultMatchEngine;
-import org.providence.common.predicate.MatchAction;
 import org.providence.common.predicate.MatchEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
