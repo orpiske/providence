@@ -32,15 +32,16 @@ public class ExcludedUsersPredicate implements Predicate {
     public boolean matches(Exchange exchange) {
         Status status = exchange.getIn().getBody(Status.class);
 
-        MatchAction ignored = new MatchAction() {
-            @Override
-            public void execute(String keyword) {
-                logger.info("Ignoring twitter user {}", keyword);
+        String screenName = status.getUser().getScreenName();
+        logger.debug("Checking if user {} is ignored", screenName);
+
+        for (String name : excludes) {
+            if (screenName.matches(name)) {
+                logger.debug("User {} is ignored", screenName);
+                return true;
             }
-        };
+        }
 
-
-        return matchEngine.keywordMatch(status.getUser().getScreenName(),
-                Collections.singletonList(ignored));
+        return false;
     }
 }
