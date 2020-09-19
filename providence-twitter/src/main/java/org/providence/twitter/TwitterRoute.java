@@ -43,7 +43,7 @@ public class TwitterRoute extends RouteBuilder {
 
         from(inRoute)
                 .filter(new ContainsPredicate(SOURCE_NAME))
-                .filter(new ExcludedUsersPredicate())
+//                .filter(new ExcludedUsersPredicate())
                 .process(new TwitterProcessor())
                 .setProperty(RouteConstants.SOURCE, constant(SOURCE_NAME))
                 .to("seda:internal");
