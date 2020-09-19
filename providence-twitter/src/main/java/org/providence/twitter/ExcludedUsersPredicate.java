@@ -34,11 +34,11 @@ public class ExcludedUsersPredicate implements Predicate {
 
         for (String name : excludes) {
             if (screenName.matches(name)) {
-                logger.debug("User {} is ignored", screenName);
-                return true;
+                logger.info("User {} is ignored", screenName);
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 }
