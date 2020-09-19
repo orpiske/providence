@@ -30,7 +30,7 @@ public class ExcludedUsersPredicate implements Predicate {
         Status status = exchange.getIn().getBody(Status.class);
 
         String screenName = status.getUser().getScreenName();
-        logger.debug("Checking if user {} is ignored", screenName);
+        logger.info("Checking if user {} is ignored", screenName);
 
         for (String name : excludes) {
             if (screenName.matches(name)) {
