@@ -8,6 +8,7 @@ import org.providence.common.LogConfigurator;
 import org.providence.common.routes.InternalRoute;
 import org.providence.pushover.PushoverRoute;
 import org.providence.reddit.impl.RedditRoute;
+import org.providence.reddit.impl.WallpaperPredicate;
 import org.providence.rest.CuratedRoute;
 import org.providence.rest.AllRecordsService;
 import org.providence.rest.TodaySharedService;
@@ -45,10 +46,13 @@ public class ProvidenceCollectorMain {
             main.configure().addRoutesBuilder(new SimpleRssRoute("Slashdot",
                     "http://rss.slashdot.org/Slashdot/slashdotMain/to", new SlashdotNormalizer()));
 
-            String[] subReddits = config.getStringArray("reddit.subreddits");
 
-            for (String subReddit : subReddits) {
+            for (String subReddit : config.getStringArray("reddit.subreddits")) {
                 main.configure().addRoutesBuilder(new RedditRoute(subReddit, RedditRoute.KEYWORD_PREDICATE));
+            }
+
+            for (String subReddit : config.getStringArray("reddit.subreddits.wallpaper")) {
+                main.configure().addRoutesBuilder(new RedditRoute(subReddit, new WallpaperPredicate()));
             }
 
             main.configure().addRoutesBuilder(new InternalRoute());
