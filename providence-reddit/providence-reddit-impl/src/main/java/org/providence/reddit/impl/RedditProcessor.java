@@ -27,6 +27,7 @@ public class RedditProcessor implements Processor {
     private static final Logger logger = LoggerFactory.getLogger(RedditProcessor.class);
 
 
+
     @Override
     public void process(Exchange exchange) {
         Submission submission = exchange.getIn().getBody(Submission.class);

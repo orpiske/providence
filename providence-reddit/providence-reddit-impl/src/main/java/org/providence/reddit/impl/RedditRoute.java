@@ -16,6 +16,7 @@
 
 package org.providence.reddit.impl;
 
+import org.apache.camel.Predicate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.commons.configuration.AbstractConfiguration;
 import org.providence.common.ConfigurationWrapper;
@@ -24,14 +25,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RedditRoute extends RouteBuilder {
+    public static final RedditPredicate KEYWORD_PREDICATE = new RedditPredicate();
     private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();
     private static final Logger logger = LoggerFactory.getLogger(RedditRoute.class);
 
     private final String subReddit;
     private final String fullSourceName;
+    private final Predicate predicate;
 
-    public RedditRoute(final String subReddit) {
+    public RedditRoute(final String subReddit, final Predicate predicate) {
         this.subReddit = subReddit;
+        this.predicate = predicate;
 
         fullSourceName = String.format("Reddit r/%s", subReddit);
     }
@@ -49,7 +53,7 @@ public class RedditRoute extends RouteBuilder {
         logger.info("Created route from: {}", inRoute);
 
         from(inRoute)
-                .filter(new RedditPredicate())
+                .filter(predicate)
                 .process(new RedditProcessor())
                 .setProperty(RouteConstants.SOURCE, constant(fullSourceName))
                 .to("seda:internal");
