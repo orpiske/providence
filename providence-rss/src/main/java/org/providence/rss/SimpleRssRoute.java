@@ -33,7 +33,9 @@ public class SimpleRssRoute extends RouteBuilder {
 
     @Override
     public void configure() {
-        errorHandler(deadLetterChannel("seda:rssErrors"));
+        String dlc = String.format("seda:rssErrors%s", name);
+
+        errorHandler(deadLetterChannel(dlc));
 
         from("rss:" + address + "?splitEntries=false&delay=1800000")
                 .split()
@@ -43,7 +45,7 @@ public class SimpleRssRoute extends RouteBuilder {
                 .setProperty(RouteConstants.SOURCE, constant(name))
                 .to("seda:internal");
 
-        from("seda:rssErrors")
+        from(dlc)
                 .log("Error reading RSS data: ${exchangeProperty.CamelExceptionCaught}: ${body}");
     }
 }
