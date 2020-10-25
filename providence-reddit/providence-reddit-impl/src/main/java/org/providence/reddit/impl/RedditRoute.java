@@ -50,7 +50,7 @@ public class RedditRoute extends RouteBuilder {
         final String clientId = config.getString("reddit.clientId");
         final String clientSecret = config.getString("reddit.clientSecret");
 
-        final String inRoute = String.format("reddit://subreddit?username=%s&password=%s&clientId=%s&clientSecret=%s&subReddit=%s&pageSize=40&delay=3600",
+        final String inRoute = String.format("reddit://subreddit?username=%s&password=RAW(%s)&clientId=%s&clientSecret=RAW(%s)&subReddit=%s&pageSize=40&delay=3600",
                 username, password, clientId, clientSecret, subReddit);
 
         logger.info("Created route from: {}", inRoute);
