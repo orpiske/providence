@@ -39,6 +39,8 @@ public class PushoverRoute extends RouteBuilder {
 
     @Override
     public void configure() {
+        errorHandler(deadLetterChannel("seda:pushoverErrors"));
+
         final String appToken = config.getString("pushover.appToken");
         final String userToken = config.getString("pushover.userToken");
 
@@ -58,5 +60,8 @@ public class PushoverRoute extends RouteBuilder {
                     .end()
                 .process(new AddReferenceUrlProcessor())
                 .to("https://api.pushover.net/1/messages.json");
+
+        from("seda:pushoverErrors")
+                .log("Error writing Pushover data: ${exchangeProperty.CamelExceptionCaught}: ${body}");
     }
 }

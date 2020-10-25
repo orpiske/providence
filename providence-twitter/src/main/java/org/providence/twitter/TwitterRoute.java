@@ -30,6 +30,8 @@ public class TwitterRoute extends RouteBuilder {
     private static final String SOURCE_NAME = "Twitter";
 
     public void configure() {
+        errorHandler(deadLetterChannel("seda:twitterErrors"));
+
         final String consumerKey = config.getString("twitter.consumerKey");
         final String consumerSecret = config.getString("twitter.consumerSecret");
         final String accessToken = config.getString("twitter.accessToken");
@@ -47,5 +49,8 @@ public class TwitterRoute extends RouteBuilder {
                 .process(new TwitterProcessor())
                 .setProperty(RouteConstants.SOURCE, constant(SOURCE_NAME))
                 .to("seda:internal");
+
+        from("seda:twitterErrors")
+                .log("Error reading Twitter data: ${exchangeProperty.CamelExceptionCaught}: ${body}");
     }
 }
