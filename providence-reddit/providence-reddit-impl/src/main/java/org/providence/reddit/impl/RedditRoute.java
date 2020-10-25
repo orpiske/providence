@@ -42,7 +42,8 @@ public class RedditRoute extends RouteBuilder {
 
     @Override
     public void configure() {
-        errorHandler(deadLetterChannel("seda:redditErrors"));
+        String dlc = String.format("seda:redditErrors%s", subReddit);
+        errorHandler(deadLetterChannel(dlc));
 
         final String username = config.getString("reddit.username");
         final String password = config.getString("reddit.password");
@@ -60,7 +61,7 @@ public class RedditRoute extends RouteBuilder {
                 .setProperty(RouteConstants.SOURCE, constant(fullSourceName))
                 .to("seda:internal");
 
-        from("seda:redditErrors")
+        from(dlc)
                 .log("Error reading reddit data: ${exchangeProperty.CamelExceptionCaught}: ${body}");
     }
 }
