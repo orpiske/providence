@@ -16,6 +16,9 @@
 
 package org.providence.reddit.impl;
 
+import java.util.Arrays;
+import java.util.List;
+
 import net.dean.jraw.models.Submission;
 import org.apache.camel.Exchange;
 import org.apache.camel.Predicate;
@@ -29,6 +32,7 @@ import org.slf4j.LoggerFactory;
 public class WallpaperPredicate implements Predicate {
     private static final Logger logger = LoggerFactory.getLogger(WallpaperPredicate.class);
     private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();
+    private List<String> searchTerms = Arrays.asList("space", "linux", "computer", "sunset", "beach", "brno", "prague");;
 
     private boolean excludesMatch(String stringBody, String subReddit, String[] keywords) {
         for (String keyword : keywords) {
@@ -54,11 +58,13 @@ public class WallpaperPredicate implements Predicate {
         String stringBody = inBody.getTitle();
         String subReddit = inBody.getSubreddit();
 
-        if (inBody.getTitle().matches("space")) {
-            logger.trace("Reddit submission on {} matched {} the keyword", subReddit, stringBody);
+        for (String searchTerm : searchTerms) {
+            if (StringUtils.containsIgnoreCase(stringBody, searchTerm)) {
+                logger.trace("Reddit submission on {} matched {} the keyword", subReddit, searchTerm);
 
-            // default to false for now
-            return false;
+                // default to false for now
+                return false;
+            }
         }
 
         return false;
