@@ -32,7 +32,11 @@ import org.slf4j.LoggerFactory;
 public class WallpaperPredicate implements Predicate {
     private static final Logger logger = LoggerFactory.getLogger(WallpaperPredicate.class);
     private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();
-    private List<String> searchTerms = Arrays.asList("space", "linux", "computer", "sunset", "beach", "brno", "prague");;
+    String[] searchTerms = config.getStringArray("reddit.subreddits.wallpaper.includes");
+
+    public WallpaperPredicate() {
+        logger.info("Creating a new wallpaper predicate");
+    }
 
     private boolean excludesMatch(String stringBody, String subReddit, String[] keywords) {
         for (String keyword : keywords) {
