@@ -7,7 +7,7 @@
     <groupId>org.providence</groupId>
     <artifactId>providence</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.4-SNAPSHOT</version>
 
     <properties>
         <camel.version>3.4.4</camel.version>
