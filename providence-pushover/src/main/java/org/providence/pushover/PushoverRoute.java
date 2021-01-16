@@ -18,7 +18,7 @@ package org.providence.pushover;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.processor.ErrorHandler;
+import org.apache.camel.spi.ErrorHandler;
 import org.apache.commons.configuration.AbstractConfiguration;
 import org.providence.common.ConfigurationWrapper;
 import org.providence.common.RouteConstants;
