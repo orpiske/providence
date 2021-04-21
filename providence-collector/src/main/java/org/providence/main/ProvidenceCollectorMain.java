@@ -16,6 +16,7 @@ import org.providence.rss.SimpleRssRoute;
 import org.providence.rss.normalizer.HackerNewsNormalizer;
 import org.providence.rss.normalizer.SlashdotNormalizer;
 import org.providence.twitter.TwitterRoute;
+import org.providence.twitter.TwitterUserListRoute;
 
 public class ProvidenceCollectorMain {
 
@@ -41,6 +42,14 @@ public class ProvidenceCollectorMain {
             AbstractConfiguration config = ConfigurationWrapper.getConfig();
 
             main.configure().addRoutesBuilder(new TwitterRoute());
+
+            for (String listOwner : config.getStringArray("twitter.user.lists.owner")) {
+                for (String list : config.getStringArray("twitter.user.lists." + listOwner)) {
+                    System.out.println("Adding list " + list + " by user " + listOwner);
+                    main.configure().addRoutesBuilder(new TwitterUserListRoute(listOwner, list));
+                }
+            }
+
             main.configure().addRoutesBuilder(new SimpleRssRoute("Hacker News", "https://news.ycombinator.com/rss",
                     new HackerNewsNormalizer()));
             main.configure().addRoutesBuilder(new SimpleRssRoute("Slashdot",

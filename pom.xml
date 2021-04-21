@@ -10,7 +10,7 @@
     <version>0.0.5-SNAPSHOT</version>
 
     <properties>
-        <camel.version>3.7.3</camel.version>
+        <camel.version>3.11.0</camel.version>
         <log4j.version>1.7.25</log4j.version>
         <commons-io.version>1.10</commons-io.version>
         <commons-dbcp2.version>2.7.0</commons-dbcp2.version>
@@ -22,13 +22,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>JCenter</id>
-            <url>https://jcenter.bintray.com/</url>
-        </repository>
-    </repositories>
 
     <licenses>
         <license>
