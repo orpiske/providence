@@ -41,6 +41,8 @@ public class ProvidenceCollectorMain {
         try {
             AbstractConfiguration config = ConfigurationWrapper.getConfig();
 
+            main.configure().addRoutesBuilder(new InternalRoute());
+
             main.configure().addRoutesBuilder(new TwitterRoute());
 
             for (String listOwner : config.getStringArray("twitter.user.lists.owner")) {
@@ -64,7 +66,6 @@ public class ProvidenceCollectorMain {
                 main.configure().addRoutesBuilder(new RedditRoute(subReddit, new WallpaperPredicate()));
             }
 
-            main.configure().addRoutesBuilder(new InternalRoute());
             main.configure().addRoutesBuilder(new PushoverRoute());
 
             main.bind("all", new AllRecordsService());
