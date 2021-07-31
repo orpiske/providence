@@ -43,12 +43,23 @@ public class TwitterRoute extends RouteBuilder {
 
         logger.info("Created route from: {}", inRoute);
 
-        from(inRoute)
-                .filter(new ContainsPredicate(SOURCE_NAME))
-//                .filter(new ExcludedUsersPredicate())
-                .process(new TwitterProcessor())
-                .setProperty(RouteConstants.SOURCE, constant(SOURCE_NAME))
-                .to("seda:internal");
+        boolean filtering = config.getBoolean("twitter.filter", true);
+
+        // TODO: cleanup
+        if (filtering) {
+            from(inRoute)
+                    .filter(new ContainsPredicate(SOURCE_NAME))
+                    .filter(new ExcludedUsersPredicate())
+                    .process(new TwitterProcessor())
+                    .setProperty(RouteConstants.SOURCE, constant(SOURCE_NAME))
+                    .to("seda:internal");
+        } else {
+            from(inRoute)
+                    .filter(new ContainsPredicate(SOURCE_NAME))
+                    .process(new TwitterProcessor())
+                    .setProperty(RouteConstants.SOURCE, constant(SOURCE_NAME))
+                    .to("seda:internal");
+        }
 
         from("seda:twitterErrors")
                 .log("Error reading Twitter data: ${exchangeProperty.CamelExceptionCaught}: ${body}");

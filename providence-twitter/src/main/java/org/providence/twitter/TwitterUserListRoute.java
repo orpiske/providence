@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 public class TwitterUserListRoute extends RouteBuilder {
     private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();
     private static final Logger logger = LoggerFactory.getLogger(TwitterUserListRoute.class);
-//    private static final String SOURCE_NAME = "Twitter User List";
     private final String user;
     private final String list;
 
@@ -53,12 +52,23 @@ public class TwitterUserListRoute extends RouteBuilder {
 
         String sourceName = String.format("Twitter User List %s from @%s", list, user);
 
-        from(inRoute)
-                .filter(new ContainsPredicate(sourceName))
-//                .filter(new ExcludedUsersPredicate())
-                .process(new TwitterProcessor())
-                .setProperty(RouteConstants.SOURCE, constant(sourceName))
-                .to("seda:internal");
+        boolean filtering = config.getBoolean("twitter.filter.lists", true);
+
+        // TODO: cleanup
+        if (filtering) {
+            from(inRoute)
+                    .filter(new ContainsPredicate(sourceName))
+                    .filter(new ExcludedUsersPredicate())
+                    .process(new TwitterProcessor())
+                    .setProperty(RouteConstants.SOURCE, constant(sourceName))
+                    .to("seda:internal");
+        } else {
+            from(inRoute)
+                    .filter(new ContainsPredicate(sourceName))
+                    .process(new TwitterProcessor())
+                    .setProperty(RouteConstants.SOURCE, constant(sourceName))
+                    .to("seda:internal");
+        }
 
         from("seda:twitterListErrors." + sanitizedListName)
                 .log("Error reading Twitter data: ${exchangeProperty.CamelExceptionCaught}: ${body}");
