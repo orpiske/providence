@@ -49,6 +49,8 @@ public class PushoverRoute extends RouteBuilder {
 
         errorHandler(defaultErrorHandler().onExceptionOccurred(new PushoverError()));
 
+        int maxMessagesPerSecond = config.getInt("pushover.maxMessagesPerSecond", 2);
+
         from("seda:final?multipleConsumers=true")
                 .setHeader(Exchange.CONTENT_TYPE, constant("application/x-www-form-urlencoded"))
                 .setHeader(Exchange.HTTP_METHOD, constant("POST"))
@@ -59,7 +61,7 @@ public class PushoverRoute extends RouteBuilder {
                         .setBody(simple(formattedBody))
                     .end()
                 .process(new AddReferenceUrlProcessor())
-                .throttle(5).timePeriodMillis(1000)
+                .throttle(maxMessagesPerSecond).timePeriodMillis(1000)
                 .to("https://api.pushover.net/1/messages.json");
 
         from("seda:pushoverErrors")
