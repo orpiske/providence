@@ -74,7 +74,7 @@ public class RedditEndpoint extends DefaultEndpoint {
 
     @Override
     public Consumer createConsumer(Processor processor) {
-        return new RedditConsumer(this, processor);
+        return new RedditConsumer(this, processor, username);
     }
 
     @Override

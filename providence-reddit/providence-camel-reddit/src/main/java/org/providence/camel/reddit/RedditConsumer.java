@@ -36,14 +36,14 @@ import java.util.concurrent.TimeUnit;
 
 public class RedditConsumer extends ScheduledPollConsumer {
     private static final Logger logger = LoggerFactory.getLogger(RedditConsumer.class);
-    private static final UserAgent userAgent = new UserAgent("any", "ProvidenceOSS", "v0.1",
-            "otavio021");
+    private final UserAgent userAgent;
     private final RedditEndpoint endpoint;
 
-    public RedditConsumer(RedditEndpoint endpoint, Processor processor) {
+    public RedditConsumer(RedditEndpoint endpoint, Processor processor, String userName) {
         super(endpoint, processor);
 
         this.endpoint = endpoint;
+        this.userAgent = new UserAgent("any", "ProvidenceOSS", "v0.1", userName);
 
         logger.debug("Reading records every {} seconds", TimeUnit.SECONDS.toMillis(endpoint.getDelay()));
         super.setDelay(TimeUnit.SECONDS.toMillis(endpoint.getDelay()));
