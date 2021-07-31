@@ -68,8 +68,11 @@ public class ConfigurationWrapper {
 			config.addConfiguration(userConfiguration);
 		}
 		else {
-			if (!userFile.getParentFile().mkdirs()) {
-				throw new IOException("Unable to create user directories");
+			File configDirFile = userFile.getParentFile();
+			if (!configDirFile.exists()) {
+				if (!configDirFile.mkdirs()) {
+					throw new IOException("Unable to create user directories: " + userFile.getParentFile());
+				}
 			}
 		}
 
