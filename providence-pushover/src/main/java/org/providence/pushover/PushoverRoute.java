@@ -59,6 +59,7 @@ public class PushoverRoute extends RouteBuilder {
                         .setBody(simple(formattedBody))
                     .end()
                 .process(new AddReferenceUrlProcessor())
+                .throttle(5).timePeriodMillis(1000)
                 .to("https://api.pushover.net/1/messages.json");
 
         from("seda:pushoverErrors")
