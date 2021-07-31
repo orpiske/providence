@@ -35,7 +35,7 @@
         </dependency>
 
         <dependency>
-            <groupId>net.dean.jraw</groupId>
+            <groupId>com.faendir.jraw</groupId>
             <artifactId>JRAW</artifactId>
         </dependency>
 
