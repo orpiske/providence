@@ -16,14 +16,14 @@
 package org.providence.common;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
+
 import org.apache.commons.configuration.AbstractConfiguration;
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 
 /**
@@ -44,17 +44,12 @@ public class ConfigurationWrapper {
 	 * 			  The configuration directory containing the configuration file
 	 * @param fileName
 	 *            The name of the configuration file
-	 * @throws FileNotFoundException If the file does not exist
 	 * @throws ConfigurationException if the configuration file contains errors
 	 */
-	public static void initConfiguration(final String configDir,
-			final String fileName) throws IOException,
+	public static void initConfiguration(final String configDir, final String fileName) throws IOException,
 			ConfigurationException {
-		if (configDir == null) {
-			throw new FileNotFoundException(
-					"The configuration dir was not found");
-		}
-		
+		Objects.requireNonNull(configDir, "The configuration dir was not provided");
+
     	// Appends an user config file, if exits ($HOME/.providence/<configuration.properties>)
 		String userFilePath = RuntimeUtils.getAppDirectoryPath() + File.separator
 				+ fileName;
@@ -63,7 +58,6 @@ public class ConfigurationWrapper {
 		if (userFile.exists()) { 
 			PropertiesConfiguration userConfiguration = 
 					new PropertiesConfiguration(userFile);
-			
 
 			config.addConfiguration(userConfiguration);
 		}
