@@ -14,7 +14,7 @@
         <log4j.version>1.7.25</log4j.version>
         <commons-io.version>1.10</commons-io.version>
         <commons-dbcp2.version>2.7.0</commons-dbcp2.version>
-        <spring-jdbc.version>5.0.18.RELEASE</spring-jdbc.version>
+        <spring-jdbc.version>5.0.20.RELEASE</spring-jdbc.version>
         <h2.version>1.4.197</h2.version>
         <jraw.version>1.2.0</jraw.version>
         <jaxb-api.version>2.3.0</jaxb-api.version>
