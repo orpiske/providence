@@ -34,11 +34,11 @@ public class CleanupDBService {
             exchange.getIn().setBody(duplicated.size() + " records converted");
         }
         catch (Exception e) {
-            logger.error("Unable to remove records: {}", e.getMessage());
+            logger.error("Unable to remove records: {}", e.getMessage(), e);
 
             exchange.getIn().setHeader(Exchange.CONTENT_TYPE, "text/plain");
             exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, 400);
-            exchange.getIn().setBody("Unable to remove records");
+            exchange.getIn().setBody("Unable to remove records: " + e.getMessage());
         }
     }
 }
