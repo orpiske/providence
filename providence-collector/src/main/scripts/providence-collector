@@ -16,12 +16,10 @@
 
 cygwin=false
 darwin=false
-mingw=false
 
 # OS specific support.  $var _must_ be set to either true or false.
 case "$(uname)" in
     CYGWIN*) cygwin=true ;;
-    MINGW*) mingw=true ;;
     Darwin*) darwin=true ;;
 esac
 
