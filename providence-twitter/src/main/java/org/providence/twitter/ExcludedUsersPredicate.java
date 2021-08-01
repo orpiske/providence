@@ -1,28 +1,26 @@
 package org.providence.twitter;
 
+import java.util.Set;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.Predicate;
 import org.apache.commons.configuration.AbstractConfiguration;
 import org.providence.common.ConfigurationWrapper;
 import org.providence.common.predicate.ContainsPredicate;
-import org.providence.common.predicate.DefaultMatchEngine;
-import org.providence.common.predicate.MatchEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import twitter4j.Status;
 
 
-// 102013789
 public class ExcludedUsersPredicate implements Predicate {
     private static final Logger logger = LoggerFactory.getLogger(ContainsPredicate.class);
-    private static final MatchEngine matchEngine = DefaultMatchEngine.getInstance();
 
-    private static final String[] excludes;
+    private static final Set<String> excludes;
 
     static {
         AbstractConfiguration config = ConfigurationWrapper.getConfig();
 
-        excludes = config.getStringArray("twitter.excluded.users");
+        excludes = Set.of(config.getStringArray("twitter.excluded.users"));
     }
 
     @Override
@@ -32,13 +30,6 @@ public class ExcludedUsersPredicate implements Predicate {
         String screenName = status.getUser().getScreenName();
         logger.info("Checking if user {} is ignored", screenName);
 
-        for (String name : excludes) {
-            if (screenName.matches(name)) {
-                logger.info("User {} is ignored", screenName);
-                return false;
-            }
-        }
-
-        return true;
+        return excludes.contains(screenName);
     }
 }
