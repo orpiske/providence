@@ -16,6 +16,9 @@
 
 package org.providence.reddit.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.dean.jraw.models.Submission;
 import org.apache.camel.Exchange;
 import org.apache.camel.Predicate;
@@ -30,6 +33,7 @@ import org.slf4j.LoggerFactory;
 public class RedditPredicate implements Predicate {
     private static final Logger logger = LoggerFactory.getLogger(RedditPredicate.class);
     private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();
+    private final Map<String, String[]> excludesMap = new HashMap<>();
 
     private boolean excludesMatch(String stringBody, String subReddit, String[] keywords) {
         for (String keyword : keywords) {
@@ -55,9 +59,11 @@ public class RedditPredicate implements Predicate {
         String stringBody = inBody.getTitle();
         if (MatchUtils.keywordMatch(exchange, stringBody, "Reddit")) {
             String subReddit = inBody.getSubreddit();
-            String[] excludes = config.getStringArray("reddit." + subReddit + ".excludes");
 
-            if (!excludesMatch(stringBody, subReddit, excludes)) {
+            String[] excludes = excludesMap.
+                    computeIfAbsent(subReddit, a -> config.getStringArray("reddit." + subReddit + ".excludes"));
+
+             if (!excludesMatch(stringBody, subReddit, excludes)) {
                 return true;
             }
         }
