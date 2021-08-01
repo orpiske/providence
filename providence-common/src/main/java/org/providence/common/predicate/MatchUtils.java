@@ -23,7 +23,6 @@ import org.apache.camel.Exchange;
 public class MatchUtils {
     private static final MatchEngine matchEngine = DefaultMatchEngine.getInstance();
 
-    @Deprecated
     public static boolean keywordMatch(Exchange exchange, String stringBody, String source) {
         MatchAction matchAction = new SourcePropertyAction(exchange, source);
 
