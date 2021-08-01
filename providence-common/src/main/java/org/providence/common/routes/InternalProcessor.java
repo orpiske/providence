@@ -52,7 +52,7 @@ public class InternalProcessor implements Processor {
                     return;
                 }
             } else {
-                logger.info("Message with hash {} refers to a content that is already noted, therefore is marked for discard",
+                logger.debug("Message with hash {} refers to a content that is already noted, therefore is marked for discard",
                         naiveHash);
 
                 exchange.setProperty(RouteConstants.NEW_CONTENT, false);
