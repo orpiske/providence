@@ -16,12 +16,12 @@
 
 package org.providence.rest;
 
+import java.util.List;
+
 import org.providence.common.dao.SharedDao;
 import org.providence.common.dao.dto.Shared;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 public class TodaySharedService {
     private static final Logger logger = LoggerFactory.getLogger(TodaySharedService.class);

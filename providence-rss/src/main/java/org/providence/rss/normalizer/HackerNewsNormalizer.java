@@ -16,10 +16,10 @@
 
 package org.providence.rss.normalizer;
 
-import com.rometools.rome.feed.synd.SyndEntryImpl;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+
+import com.rometools.rome.feed.synd.SyndEntryImpl;
 
 public class HackerNewsNormalizer extends RssNormalizer {
 

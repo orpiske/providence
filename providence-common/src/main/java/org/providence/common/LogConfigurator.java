@@ -15,10 +15,10 @@
  */
 package org.providence.common;
 
-import org.apache.log4j.PropertyConfigurator;
-
 import java.io.File;
 import java.util.Properties;
+
+import org.apache.log4j.PropertyConfigurator;
 
 /**
  * Utility class to configure the logger

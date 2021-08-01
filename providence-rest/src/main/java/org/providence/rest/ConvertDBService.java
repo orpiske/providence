@@ -1,7 +1,6 @@
 package org.providence.rest;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.camel.Exchange;
 import org.providence.common.NaiveHash;

@@ -16,6 +16,8 @@
 
 package org.providence.common.dao.builder;
 
+import java.sql.SQLException;
+
 import org.apache.commons.configuration.AbstractConfiguration;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.providence.common.ConfigurationWrapper;
@@ -26,8 +28,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
-
-import java.sql.SQLException;
 
 
 /**

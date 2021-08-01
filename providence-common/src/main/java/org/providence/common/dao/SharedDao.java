@@ -16,14 +16,14 @@
 
 package org.providence.common.dao;
 
+import java.util.List;
+
 import org.providence.common.dao.dto.Shared;
 import org.providence.common.dao.exceptions.DataNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.SingleColumnRowMapper;
-
-import java.util.List;
 
 public class SharedDao extends AbstractDao {
     private static final Logger logger = LoggerFactory.getLogger(SharedDao.class);

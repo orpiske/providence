@@ -15,9 +15,9 @@
  */
 package org.providence.common;
 
-import org.apache.commons.io.FileUtils;
-
 import java.io.File;
+
+import org.apache.commons.io.FileUtils;
 
 /**
  * Runtime utilities

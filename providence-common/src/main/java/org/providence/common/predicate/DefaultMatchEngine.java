@@ -16,13 +16,13 @@
 
 package org.providence.common.predicate;
 
+import java.util.List;
+
 import org.apache.commons.configuration.AbstractConfiguration;
 import org.apache.commons.lang.StringUtils;
 import org.providence.common.ConfigurationWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 public class DefaultMatchEngine implements MatchEngine {
     private static final Logger logger = LoggerFactory.getLogger(DefaultMatchEngine.class);

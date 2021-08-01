@@ -16,6 +16,8 @@
 
 package org.providence.camel.reddit;
 
+import java.util.concurrent.TimeUnit;
+
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.http.NetworkAdapter;
 import net.dean.jraw.http.OkHttpNetworkAdapter;
@@ -31,8 +33,6 @@ import org.apache.camel.Processor;
 import org.apache.camel.support.ScheduledPollConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.TimeUnit;
 
 public class RedditConsumer extends ScheduledPollConsumer {
     private static final Logger logger = LoggerFactory.getLogger(RedditConsumer.class);

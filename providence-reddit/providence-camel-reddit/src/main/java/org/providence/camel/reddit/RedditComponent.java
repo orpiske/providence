@@ -16,10 +16,10 @@
 
 package org.providence.camel.reddit;
 
+import java.util.Map;
+
 import org.apache.camel.Endpoint;
 import org.apache.camel.support.DefaultComponent;
-
-import java.util.Map;
 
 public class RedditComponent extends DefaultComponent {
     @Override

@@ -16,6 +16,9 @@
 
 package org.providence.common.dao;
 
+import java.util.List;
+import java.util.Objects;
+
 import org.providence.common.dao.exceptions.DataNotFoundException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,9 +28,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-
-import java.util.List;
-import java.util.Objects;
 
 /**
  * Utility code to run DB queries. Wrapper for Spring JDBC code

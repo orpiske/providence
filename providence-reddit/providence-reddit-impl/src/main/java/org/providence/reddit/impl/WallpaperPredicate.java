@@ -16,9 +16,6 @@
 
 package org.providence.reddit.impl;
 
-import java.util.Arrays;
-import java.util.List;
-
 import net.dean.jraw.models.Submission;
 import org.apache.camel.Exchange;
 import org.apache.camel.Predicate;

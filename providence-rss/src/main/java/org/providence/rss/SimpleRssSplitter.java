@@ -16,9 +16,9 @@
 
 package org.providence.rss;
 
-import com.rometools.rome.feed.synd.SyndFeedImpl;
-
 import java.util.List;
+
+import com.rometools.rome.feed.synd.SyndFeedImpl;
 
 public class SimpleRssSplitter {
     public List<?> splitEntries(SyndFeedImpl feed) {
