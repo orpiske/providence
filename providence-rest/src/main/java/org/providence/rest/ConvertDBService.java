@@ -27,11 +27,11 @@ public class ConvertDBService {
 
         }
         catch (Exception e) {
-            logger.error("Unable to fetch records: {}", e.getMessage());
+            logger.error("Unable to update records: {}", e.getMessage());
 
             exchange.getIn().setHeader(Exchange.CONTENT_TYPE, "text/plain");
             exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, 400);
-            exchange.getIn().setBody("Unable to fetch records:");
+            exchange.getIn().setBody("Unable to update records: " + e.getMessage());
         }
     }
 
