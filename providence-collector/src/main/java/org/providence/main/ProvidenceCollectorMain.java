@@ -9,6 +9,7 @@ import org.providence.common.routes.InternalRoute;
 import org.providence.pushover.PushoverRoute;
 import org.providence.reddit.impl.RedditRoute;
 import org.providence.reddit.impl.WallpaperPredicate;
+import org.providence.rest.ConvertDBService;
 import org.providence.rest.CuratedRoute;
 import org.providence.rest.AllRecordsService;
 import org.providence.rest.TodaySharedService;
@@ -70,6 +71,7 @@ public class ProvidenceCollectorMain {
 
             main.bind("all", new AllRecordsService());
             main.bind("today", new TodaySharedService());
+            main.bind("convert", new ConvertDBService());
             main.configure().addRoutesBuilder(new CuratedRoute());
 
             main.run();

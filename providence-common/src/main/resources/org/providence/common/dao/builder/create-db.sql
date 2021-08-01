@@ -5,3 +5,5 @@ CREATE TABLE IF NOT EXISTS `shared` (
   `shared_date` TIMESTAMP NOT NULL DEFAULT NOW(),
   `shared_text` VARCHAR(4096) NULL,
 PRIMARY KEY (`shared_id`));
+
+ALTER TABLE `shared` ADD COLUMN IF NOT EXISTS `shared_hash` LONG DEFAULT 0 AFTER `shared_id`;

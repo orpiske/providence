@@ -20,6 +20,7 @@ import java.util.Date;
 
 public class Shared {
     private int sharedId;
+    private long sharedHash;
     private String sharedSource;
     private String sharedFormat;
     private Date sharedDate;
@@ -31,6 +32,14 @@ public class Shared {
 
     public void setSharedId(int sharedId) {
         this.sharedId = sharedId;
+    }
+
+    public long getSharedHash() {
+        return sharedHash;
+    }
+
+    public void setSharedHash(long sharedHash) {
+        this.sharedHash = sharedHash;
     }
 
     public String getSharedSource() {

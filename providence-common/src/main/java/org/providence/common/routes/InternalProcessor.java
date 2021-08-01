@@ -19,6 +19,7 @@ package org.providence.common.routes;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.providence.common.NaiveHash;
 import org.providence.common.RouteConstants;
 import org.providence.common.dao.SharedDao;
 import org.providence.common.dao.dto.Shared;
@@ -33,13 +34,30 @@ public class InternalProcessor implements Processor {
     public void process(Exchange exchange) {
         String text = exchange.getIn().getBody(String.class);
 
-        int count = sharedDao.count(text);
-        if (count > 0) {
-            logger.debug("Message {} refers to a content that is already noted, therefore is marked for discard",
-                    exchange.getIn().getMessageId());
+        long naiveHash = NaiveHash.getNaiveHash(text);
+        int count = sharedDao.count(naiveHash);
 
-            exchange.setProperty(RouteConstants.NEW_CONTENT, false);
-            return;
+        if (count > 0) {
+            if (count > 1) {
+                logger.warn("There's likely a hash collision: {} records with has {}. Enforcing a full-text search ...",
+                        count, naiveHash);
+                // Re-check with full text search only if there's a collision in the hashes
+                count = sharedDao.count(text);
+
+                if (count > 0) {
+                    logger.debug("Message {} refers to a content that is already noted, therefore is marked for discard",
+                            exchange.getIn().getMessageId());
+
+                    exchange.setProperty(RouteConstants.NEW_CONTENT, false);
+                    return;
+                }
+            } else {
+                logger.info("Message with hash {} refers to a content that is already noted, therefore is marked for discard",
+                        naiveHash);
+
+                exchange.setProperty(RouteConstants.NEW_CONTENT, false);
+                return;
+            }
         }
 
         logger.info("Adding a new record that has recently appeared");
@@ -48,6 +66,7 @@ public class InternalProcessor implements Processor {
         shared.setSharedFormat((String) exchange.getProperty(RouteConstants.FORMAT));
         shared.setSharedSource((String) exchange.getProperty(RouteConstants.SOURCE));
         shared.setSharedText(text);
+        shared.setSharedHash(naiveHash);
 
         sharedDao.insert(shared);
         logger.info("Completed adding a new record to the DB");

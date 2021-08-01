@@ -45,6 +45,23 @@ public class SharedDao extends AbstractDao {
         }
     }
 
+    public int count(final long hash) {
+        try {
+            Integer ret = runQuery("select count(*) from shared where shared_hash = ?",
+                    new SingleColumnRowMapper<>(Integer.class),
+                    hash);
+
+            if (ret == null) {
+                return -1;
+            }
+
+            return ret;
+        }
+        catch (DataNotFoundException e) {
+            return 0;
+        }
+    }
+
     public void insert(final Shared shared) {
         runEmptyInsert("insert into shared(shared_source, shared_format, shared_text) " +
                 "values(:sharedSource, :sharedFormat, :sharedText)", shared);
@@ -56,5 +73,18 @@ public class SharedDao extends AbstractDao {
 
     public List<Shared> today() throws DataNotFoundException {
         return runQueryMany("select * from shared where shared_date >= CURRENT_DATE()", new BeanPropertyRowMapper<>(Shared.class));
+    }
+
+    public List<Shared> convertableRecords() throws DataNotFoundException {
+        return runQueryMany("select * from shared where shared_hash = 0",
+                new BeanPropertyRowMapper<>(Shared.class));
+    }
+
+    public void updateForConvert(List<Shared> allConvertables) {
+        for (Shared shared : allConvertables) {
+            logger.info("Updating record {} with hash {}", shared.getSharedId(), shared.getSharedHash());
+            runUpdate("update shared set shared_hash = ? where shared_id = ?",
+                    shared.getSharedHash(), shared.getSharedId());
+        }
     }
 }
