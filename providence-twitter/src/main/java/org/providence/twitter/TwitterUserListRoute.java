@@ -45,10 +45,9 @@ public class TwitterUserListRoute extends RouteBuilder {
         final String accessTokenSecret = config.getString("twitter.accessTokenSecret");
         final int interval = config.getInt("twitter.interval", 1900000);
 
-        final String inRoute = String.format("twitter-timeline://list?user=%s&list=%s&type=polling&delay=%d&consumerKey=%s&consumerSecret=%s&accessToken=%s&accessTokenSecret=%s",
-                user, list, interval, consumerKey, consumerSecret, accessToken, accessTokenSecret);
+        final String inRouteSpec = "twitter-timeline://list?user=%s&list=%s&type=polling&delay=%d&consumerKey=%s&consumerSecret=%s&accessToken=%s&accessTokenSecret=%s";
 
-        logger.info("Created route from: {}", inRoute);
+        logger.debug("Created route from: {}", inRouteSpec);
 
         String sourceName = String.format("Twitter User List %s from @%s", list, user);
 
@@ -56,14 +55,14 @@ public class TwitterUserListRoute extends RouteBuilder {
 
         // TODO: cleanup
         if (filtering) {
-            from(inRoute)
+            fromF(inRouteSpec, user, list, interval, consumerKey, consumerSecret, accessToken, accessTokenSecret)
                     .filter(new ContainsPredicate(sourceName))
                     .filter(new ExcludedUsersPredicate())
                     .process(new TwitterProcessor())
                     .setProperty(RouteConstants.SOURCE, constant(sourceName))
                     .to("seda:internal");
         } else {
-            from(inRoute)
+            fromF(inRouteSpec, user, list, interval, consumerKey, consumerSecret, accessToken, accessTokenSecret)
                     .filter(new ContainsPredicate(sourceName))
                     .process(new TwitterProcessor())
                     .setProperty(RouteConstants.SOURCE, constant(sourceName))

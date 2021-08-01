@@ -38,23 +38,22 @@ public class TwitterRoute extends RouteBuilder {
         final String accessTokenSecret = config.getString("twitter.accessTokenSecret");
         final int interval = config.getInt("twitter.interval", 1900000);
 
-        final String inRoute = String.format("twitter-timeline://home?type=polling&delay=%d&consumerKey=%s&consumerSecret=%s&accessToken=%s&accessTokenSecret=%s",
-                interval, consumerKey, consumerSecret, accessToken, accessTokenSecret);
+        final String inRouteSpec = "twitter-timeline://home?type=polling&delay=%d&consumerKey=%s&consumerSecret=%s&accessToken=%s&accessTokenSecret=%s";
 
-        logger.info("Created route from: {}", inRoute);
+        logger.debug("Created route from: {}", inRouteSpec);
 
         boolean filtering = config.getBoolean("twitter.filter", true);
 
         // TODO: cleanup
         if (filtering) {
-            from(inRoute)
+            fromF(inRouteSpec, interval, consumerKey, consumerSecret, accessToken, accessTokenSecret)
                     .filter(new ContainsPredicate(SOURCE_NAME))
                     .filter(new ExcludedUsersPredicate())
                     .process(new TwitterProcessor())
                     .setProperty(RouteConstants.SOURCE, constant(SOURCE_NAME))
                     .to("seda:internal");
         } else {
-            from(inRoute)
+            fromF(inRouteSpec, interval, consumerKey, consumerSecret, accessToken, accessTokenSecret)
                     .filter(new ContainsPredicate(SOURCE_NAME))
                     .process(new TwitterProcessor())
                     .setProperty(RouteConstants.SOURCE, constant(SOURCE_NAME))
