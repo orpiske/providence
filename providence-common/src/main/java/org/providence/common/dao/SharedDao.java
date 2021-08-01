@@ -92,7 +92,7 @@ public class SharedDao extends AbstractDao {
     public void deleteDuplicates(Collection<Shared> duplicates) {
         for (Shared shared : duplicates) {
             logger.info("Removing record {} with hash {}", shared.getSharedId(), shared.getSharedHash());
-            runUpdate("delete from shared where shared_id = ?", shared.getSharedId());
+            runUpdate("delete from shared where shared_id = :sharedId", shared);
         }
     }
 }
