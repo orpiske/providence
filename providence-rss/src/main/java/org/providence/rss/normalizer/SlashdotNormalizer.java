@@ -17,18 +17,16 @@
 package org.providence.rss.normalizer;
 
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import com.rometools.rome.feed.synd.SyndEntryImpl;
 
 public class SlashdotNormalizer extends RssNormalizer {
     @Override
     public String normalize(SyndEntryImpl entryBody) {
-        try {
-            return String.format("<a href=\"%s\">%s</a>", URLEncoder.encode(entryBody.getLink(), "UTF-8"), entryBody.getTitle());
-        } catch (UnsupportedEncodingException e) {
-            return String.format("%s %s", entryBody.getTitle(), entryBody.getLink());
-        }
+        return String.format("<a href=\"%s\">%s</a>", URLEncoder.encode(entryBody.getLink(), StandardCharsets.UTF_8),
+                entryBody.getTitle());
+
     }
 }

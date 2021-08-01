@@ -16,8 +16,8 @@
 
 package org.providence.rss.normalizer;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import com.rometools.rome.feed.synd.SyndEntryImpl;
 
@@ -25,14 +25,8 @@ public class HackerNewsNormalizer extends RssNormalizer {
 
     @Override
     public String normalize(SyndEntryImpl entryBody) {
-        try {
-            return String.format("<a href=\"%s\">%s</a> published on %s. Follow the %s",
-                    URLEncoder.encode(entryBody.getLink(), "UTF-8"), entryBody.getTitle(), entryBody.getPublishedDate(),
-                    entryBody.getDescription().getValue());
-        } catch (UnsupportedEncodingException e) {
-            return String.format("<a href=\"%s\">%s</a> published on %s. Follow the %s",
-                    entryBody.getLink(), entryBody.getTitle(), entryBody.getPublishedDate(),
-                    entryBody.getDescription().getValue());
-        }
+        return String.format("<a href=\"%s\">%s</a> published on %s. Follow the %s",
+                URLEncoder.encode(entryBody.getLink(), StandardCharsets.UTF_8), entryBody.getTitle(), entryBody.getPublishedDate(),
+                entryBody.getDescription().getValue());
     }
 }
