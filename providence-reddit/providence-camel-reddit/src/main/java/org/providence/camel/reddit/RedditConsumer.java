@@ -39,6 +39,12 @@ public class RedditConsumer extends ScheduledPollConsumer {
     private final UserAgent userAgent;
     private final RedditEndpoint endpoint;
 
+    private final Credentials credentials;
+
+    private final NetworkAdapter adapter;
+
+    private final RedditClient reddit;
+
     public RedditConsumer(RedditEndpoint endpoint, Processor processor, String userName) {
         super(endpoint, processor);
 
@@ -47,6 +53,16 @@ public class RedditConsumer extends ScheduledPollConsumer {
 
         logger.debug("Reading records every {} seconds", TimeUnit.SECONDS.toMillis(endpoint.getDelay()));
         super.setDelay(TimeUnit.SECONDS.toMillis(endpoint.getDelay()));
+
+        logger.info("Setting up Reddit credentials");
+        credentials = Credentials.script(endpoint.getUsername(), endpoint.getPassword(),
+                endpoint.getClientId(), endpoint.getClientSecret());
+
+        logger.info("Creating the Reddit network adapter");
+        adapter = new OkHttpNetworkAdapter(userAgent);
+
+        logger.info("Creating the Reddit client");
+        reddit = OAuthHelper.automatic(adapter, credentials);
     }
 
     protected void doProcess(Submission submission)  {
@@ -67,14 +83,6 @@ public class RedditConsumer extends ScheduledPollConsumer {
 
     @Override
     protected int poll() {
-        Credentials credentials = Credentials.script(endpoint.getUsername(), endpoint.getPassword(),
-                endpoint.getClientId(), endpoint.getClientSecret());
-
-        NetworkAdapter adapter = new OkHttpNetworkAdapter(userAgent);
-
-        // Authenticate and get a RedditClient instance
-        RedditClient reddit = OAuthHelper.automatic(adapter, credentials);
-
         DefaultPaginator<Submission> pgn = reddit.subreddit(endpoint.getSubReddit())
                 .posts()
                 .limit(30)
