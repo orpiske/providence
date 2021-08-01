@@ -28,6 +28,7 @@ import twitter4j.Status;
 public class TwitterProcessor implements Processor {
     private static final Logger logger = LoggerFactory.getLogger(TwitterProcessor.class);
     private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();
+    private final String twitterHandler = config.getString("twitter.handler", "twitter");
 
     public void process(Exchange exchange) {
         Status status = exchange.getIn().getBody(Status.class);
@@ -38,7 +39,6 @@ public class TwitterProcessor implements Processor {
 
         exchange.setProperty(RouteConstants.FORMAT, "raw");
 
-        String twitterHandler = config.getString("twitter.handler", "twitter");
         String refLink = String.format("%s://status?id=%d", twitterHandler, status.getId());
         exchange.setProperty("reference", refLink);
     }
