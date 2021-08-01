@@ -76,7 +76,7 @@ public class SharedDao extends AbstractDao {
     }
 
     public List<Shared> convertableRecords() throws DataNotFoundException {
-        return runQueryMany("select * from shared where shared_hash = 0",
+        return runQueryMany("select * from shared where shared_hash = 0 or shared_hash = null",
                 new BeanPropertyRowMapper<>(Shared.class));
     }
 
