@@ -13,7 +13,7 @@ public class ConvertDBService {
     private static final Logger logger = LoggerFactory.getLogger(AllRecordsService.class);
     private final SharedDao sharedDao = new SharedDao();
 
-    public void convert(Exchange exchange) throws Exception {
+    public void convert(Exchange exchange) {
         try {
             List<Shared> convertableRecords = sharedDao.convertableRecords();
 
