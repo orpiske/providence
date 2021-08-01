@@ -16,21 +16,15 @@
 
 package org.providence.common.predicate;
 
-import org.apache.camel.Exchange;
-import org.apache.commons.configuration.AbstractConfiguration;
-import org.providence.common.ConfigurationWrapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Collections;
 
+import org.apache.camel.Exchange;
+
 public class MatchUtils {
-    private static final Logger logger = LoggerFactory.getLogger(MatchUtils.class);
-    private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();
+    private static final MatchEngine matchEngine = DefaultMatchEngine.getInstance();
 
     @Deprecated
     public static boolean keywordMatch(Exchange exchange, String stringBody, String source) {
-        MatchEngine matchEngine = DefaultMatchEngine.getInstance();
         MatchAction matchAction = new SourcePropertyAction(exchange, source);
 
         return matchEngine.keywordMatch(stringBody, Collections.singletonList(matchAction));
