@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 public class WallpaperPredicate implements Predicate {
     private static final Logger logger = LoggerFactory.getLogger(WallpaperPredicate.class);
     private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();
-    String[] searchTerms = config.getStringArray("reddit.subreddits.wallpaper.includes");
+    private final String[] searchTerms = config.getStringArray("reddit.subreddits.wallpaper.includes");
 
     public WallpaperPredicate() {
         logger.info("Creating a new wallpaper predicate");
