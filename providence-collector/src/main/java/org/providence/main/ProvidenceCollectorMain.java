@@ -12,6 +12,7 @@ import org.providence.reddit.impl.WallpaperPredicate;
 import org.providence.rest.AllRecordsService;
 import org.providence.rest.ConvertDBService;
 import org.providence.rest.CuratedRoute;
+import org.providence.rest.CleanupDBService;
 import org.providence.rest.TodaySharedService;
 import org.providence.rss.SimpleRssRoute;
 import org.providence.rss.normalizer.HackerNewsNormalizer;
@@ -72,6 +73,7 @@ public class ProvidenceCollectorMain {
             main.bind("all", new AllRecordsService());
             main.bind("today", new TodaySharedService());
             main.bind("convert", new ConvertDBService());
+            main.bind("cleanup", new CleanupDBService());
             main.configure().addRoutesBuilder(new CuratedRoute());
 
             main.run();

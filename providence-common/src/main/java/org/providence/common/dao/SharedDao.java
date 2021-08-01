@@ -16,6 +16,7 @@
 
 package org.providence.common.dao;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.providence.common.dao.dto.Shared;
@@ -80,11 +81,18 @@ public class SharedDao extends AbstractDao {
                 new BeanPropertyRowMapper<>(Shared.class));
     }
 
-    public void updateForConvert(List<Shared> allConvertables) {
+    public void updateForConvert(Collection<Shared> allConvertables) {
         for (Shared shared : allConvertables) {
             logger.info("Updating record {} with hash {}", shared.getSharedId(), shared.getSharedHash());
             runUpdate("update shared set shared_hash = ? where shared_id = ?",
                     shared.getSharedHash(), shared.getSharedId());
+        }
+    }
+
+    public void deleteDuplicates(Collection<Shared> duplicates) {
+        for (Shared shared : duplicates) {
+            logger.info("Removing record {} with hash {}", shared.getSharedId(), shared.getSharedHash());
+            runUpdate("delete shared where shared_id = ?", shared.getSharedId());
         }
     }
 }
