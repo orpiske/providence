@@ -124,6 +124,15 @@ public abstract class AbstractDao extends NamedParameterJdbcDaoSupport {
         EasyRunner.runUpdate(jdbcTemplate, query, bean);
     }
 
+    /**
+     * Update records in the DB
+     * @param query the query to run
+     * @param bean the bean with the data to update
+     */
+    protected void runDelete(final String query, final Object bean) {
+        EasyRunner.runDelete(Objects.requireNonNull(getNamedParameterJdbcTemplate()), query, bean);
+    }
+
 
     /**
      * Update records in the DB

@@ -146,6 +146,18 @@ public final class EasyRunner {
         return jdbcTemplate.update(query, args);
     }
 
+    /**
+     * Deletes a record from the DB
+     * @param jdbcTemplate the Spring JDBC template object
+     * @param query the query to run
+     * @param bean the bean with the data to insert
+     */
+    public static int runDelete(final NamedParameterJdbcTemplate jdbcTemplate, final String query, final Object bean) {
+        SqlParameterSource beanParameters = new BeanPropertySqlParameterSource(bean);
+
+        return jdbcTemplate.update(query, beanParameters);
+    }
+
 
     /**
      * Inserts a record in the DB
