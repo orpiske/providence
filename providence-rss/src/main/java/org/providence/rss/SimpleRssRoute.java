@@ -17,10 +17,14 @@
 package org.providence.rss;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.commons.configuration.AbstractConfiguration;
+import org.providence.common.ConfigurationWrapper;
 import org.providence.common.RouteConstants;
 import org.providence.rss.normalizer.RssNormalizer;
 
 public class SimpleRssRoute extends RouteBuilder {
+    private static final AbstractConfiguration config = ConfigurationWrapper.getConfig();
+
     private final String address;
     private final String name;
     private final RssNormalizer rssNormalizer;
@@ -37,7 +41,12 @@ public class SimpleRssRoute extends RouteBuilder {
 
         errorHandler(deadLetterChannel(dlc));
 
-        from("rss:" + address + "?splitEntries=false&delay=1800000")
+        final String simpleName = name.toLowerCase().replace(" ", "");
+
+        long interval = config.getLong(simpleName + ".poll.interval", 1800000);
+        long initialInterval = config.getLong(simpleName + ".initial.interval", 60000);
+
+        fromF("rss:%s?splitEntries=false&delay=%d&initialDelay=%d", address, interval, initialInterval)
                 .split()
                     .method(SimpleRssSplitter.class, "splitEntries")
                 .filter(new SimpleRssPredicate(name))
