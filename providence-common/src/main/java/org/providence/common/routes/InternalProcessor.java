@@ -42,11 +42,11 @@ public class InternalProcessor implements Processor {
                 logger.warn("There's likely a hash collision: {} records with has {}. Enforcing a full-text search ...",
                         count, naiveHash);
                 // Re-check with full text search only if there's a collision in the hashes
-                count = sharedDao.count(text);
+                int fullTextCount = sharedDao.count(text);
 
-                if (count > 0) {
-                    logger.debug("Message {} refers to a content that is already noted, therefore is marked for discard",
-                            exchange.getIn().getMessageId());
+                if (fullTextCount > 0) {
+                    logger.warn("Message {} refers to a content that is already noted {}/{} times (hash count/full text count), therefore is marked for discard",
+                            naiveHash, count, fullTextCount);
 
                     exchange.setProperty(RouteConstants.NEW_CONTENT, false);
                     return;
