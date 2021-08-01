@@ -60,7 +60,7 @@ public class InternalProcessor implements Processor {
             }
         }
 
-        logger.info("Adding a new record that has recently appeared");
+        logger.debug("Adding a new record that has recently appeared");
         Shared shared = new Shared();
 
         shared.setSharedFormat((String) exchange.getProperty(RouteConstants.FORMAT));
@@ -69,7 +69,7 @@ public class InternalProcessor implements Processor {
         shared.setSharedHash(naiveHash);
 
         sharedDao.insert(shared);
-        logger.info("Completed adding a new record to the DB");
+        logger.debug("Completed adding a new record to the DB");
         exchange.setProperty(RouteConstants.NEW_CONTENT, true);
 
         if (logger.isDebugEnabled()) {
