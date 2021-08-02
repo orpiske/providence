@@ -60,25 +60,20 @@ public class InternalProcessor implements Processor {
             }
         }
 
-        logger.debug("Adding a new record that has recently appeared");
         Shared shared = new Shared();
 
-        shared.setSharedFormat((String) exchange.getProperty(RouteConstants.FORMAT));
-        shared.setSharedSource((String) exchange.getProperty(RouteConstants.SOURCE));
+        String sourceName = exchange.getProperty(RouteConstants.SOURCE, String.class);
+        shared.setSharedFormat(exchange.getProperty(RouteConstants.FORMAT, String.class));
+        shared.setSharedSource(sourceName);
         shared.setSharedText(text);
         shared.setSharedHash(naiveHash);
 
+        logger.debug("Adding a new record to the DB");
         sharedDao.insert(shared);
-        logger.debug("Completed adding a new record to the DB");
+        logger.info("Added a new record with hash {} from {} that has recently appeared", naiveHash, sourceName);
+
         exchange.setProperty(RouteConstants.NEW_CONTENT, true);
 
-        if (logger.isDebugEnabled()) {
-            if (logger.isTraceEnabled()) {
-                logger.trace("Message {} matched all the requirements and is new content", exchange.getIn().getBody());
-            }
-            else {
-                logger.debug("Message {} matched all the requirements and is new content", exchange.getIn().getMessageId());
-            }
-        }
+        logger.trace("Message {} matched all the requirements and is new content", text);
     }
 }
