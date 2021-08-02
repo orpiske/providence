@@ -32,9 +32,9 @@ public class InternalProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) {
-        String text = exchange.getIn().getBody(String.class);
-
-        long naiveHash = NaiveHash.getNaiveHash(text);
+        final String text = exchange.getIn().getBody(String.class);
+        final long naiveHash = NaiveHash.getNaiveHash(text);
+        
         int count = sharedDao.count(naiveHash);
 
         if (count > 0) {
