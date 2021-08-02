@@ -64,8 +64,8 @@ public class SharedDao extends AbstractDao {
     }
 
     public void insert(final Shared shared) {
-        runEmptyInsert("insert into shared(shared_source, shared_format, shared_text) " +
-                "values(:sharedSource, :sharedFormat, :sharedText)", shared);
+        runEmptyInsert("insert into shared(shared_source, shared_format, shared_text, shared_hash) " +
+                "values(:sharedSource, :sharedFormat, :sharedText, :sharedHash)", shared);
     }
 
     public List<Shared> fetch() throws DataNotFoundException {
