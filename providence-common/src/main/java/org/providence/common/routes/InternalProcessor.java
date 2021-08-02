@@ -34,7 +34,7 @@ public class InternalProcessor implements Processor {
     public void process(Exchange exchange) {
         final String text = exchange.getIn().getBody(String.class);
         final long naiveHash = NaiveHash.getNaiveHash(text);
-        
+
         int count = sharedDao.count(naiveHash);
 
         if (count > 0) {

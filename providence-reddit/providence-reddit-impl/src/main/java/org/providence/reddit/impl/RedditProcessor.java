@@ -39,6 +39,6 @@ public class RedditProcessor implements Processor {
 
         exchange.setProperty(RouteConstants.FORMAT, "raw");
 
-        logger.info("Processing record = {}", exchange.getIn().getBody(String.class));
+        logger.debug("Reddit content: {}", exchange.getIn().getBody(String.class));
     }
 }

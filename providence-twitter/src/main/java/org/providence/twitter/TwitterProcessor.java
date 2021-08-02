@@ -33,9 +33,7 @@ public class TwitterProcessor implements Processor {
     public void process(Exchange exchange) {
         Status status = exchange.getIn().getBody(Status.class);
 
-        if (logger.isTraceEnabled()) {
-            logger.trace("Content: {}", status);
-        }
+        logger.debug("Twitter content: {}", status);
 
         exchange.setProperty(RouteConstants.FORMAT, "raw");
 

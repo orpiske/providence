@@ -39,9 +39,7 @@ public class SimpleRssProcessor implements Processor {
             return;
         }
 
-        if (logger.isTraceEnabled()) {
-            logger.trace("Content: {}", entryBody);
-        }
+        logger.debug("RSS Content: {}", entryBody);
 
         String newBody = normalizer.normalize(entryBody);
 
