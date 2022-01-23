@@ -19,6 +19,7 @@ package org.providence.common.dao.exceptions;
 /**
  * Thrown whenever a DB data is not found
  */
+@SuppressWarnings("serial")
 public class DataNotFoundException extends Exception {
     public DataNotFoundException(final String message) {
         super(message);

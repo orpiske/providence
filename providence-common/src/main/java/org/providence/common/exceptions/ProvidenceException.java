@@ -16,6 +16,7 @@
 
 package org.providence.common.exceptions;
 
+@SuppressWarnings("serial")
 public class ProvidenceException extends RuntimeException {
     public ProvidenceException() {
         super();
