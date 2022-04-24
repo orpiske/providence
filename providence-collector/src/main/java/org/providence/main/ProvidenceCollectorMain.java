@@ -77,10 +77,9 @@ public class ProvidenceCollectorMain {
                 main.bind("convert", new ConvertDBService());
                 main.bind("cleanup", new CleanupDBService());
                 mainConfigurationProperties.addRoutesBuilder(new CuratedRoute());
+
+                main.run();
             }
-
-            main.run();
-
         } catch (Exception e) {
             System.err.println("Unable to add route: " + e.getMessage());
             e.printStackTrace();
