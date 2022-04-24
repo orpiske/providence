@@ -1,6 +1,7 @@
 package org.providence.main;
 
 import org.apache.camel.main.Main;
+import org.apache.camel.main.MainConfigurationProperties;
 import org.apache.commons.configuration.AbstractConfiguration;
 import org.providence.common.ConfigurationWrapper;
 import org.providence.common.Constants;
@@ -43,38 +44,40 @@ public class ProvidenceCollectorMain {
         try {
             AbstractConfiguration config = ConfigurationWrapper.getConfig();
 
-            main.configure().addRoutesBuilder(new InternalRoute());
+            try (MainConfigurationProperties mainConfigurationProperties = main.configure()) {
+                mainConfigurationProperties.addRoutesBuilder(new InternalRoute());
 
-            main.configure().addRoutesBuilder(new TwitterRoute());
+                mainConfigurationProperties.addRoutesBuilder(new TwitterRoute());
 
-            for (String listOwner : config.getStringArray("twitter.user.lists.owner")) {
-                for (String list : config.getStringArray("twitter.user.lists." + listOwner)) {
-                    System.out.println("Adding list " + list + " by user " + listOwner);
-                    main.configure().addRoutesBuilder(new TwitterUserListRoute(listOwner, list));
+                for (String listOwner : config.getStringArray("twitter.user.lists.owner")) {
+                    for (String list : config.getStringArray("twitter.user.lists." + listOwner)) {
+                        System.out.println("Adding list " + list + " by user " + listOwner);
+                        mainConfigurationProperties.addRoutesBuilder(new TwitterUserListRoute(listOwner, list));
+                    }
                 }
+
+                mainConfigurationProperties.addRoutesBuilder(new SimpleRssRoute("Hacker News", "https://news.ycombinator.com/rss",
+                        new HackerNewsNormalizer()));
+                mainConfigurationProperties.addRoutesBuilder(new SimpleRssRoute("Slashdot",
+                        "http://rss.slashdot.org/Slashdot/slashdotMain/to", new SlashdotNormalizer()));
+
+
+                for (String subReddit : config.getStringArray("reddit.subreddits")) {
+                    mainConfigurationProperties.addRoutesBuilder(new RedditRoute(subReddit, RedditRoute.KEYWORD_PREDICATE));
+                }
+
+                for (String subReddit : config.getStringArray("reddit.subreddits.wallpaper")) {
+                    mainConfigurationProperties.addRoutesBuilder(new RedditRoute(subReddit, new WallpaperPredicate()));
+                }
+
+                mainConfigurationProperties.addRoutesBuilder(new PushoverRoute());
+
+                main.bind("all", new AllRecordsService());
+                main.bind("today", new TodaySharedService());
+                main.bind("convert", new ConvertDBService());
+                main.bind("cleanup", new CleanupDBService());
+                mainConfigurationProperties.addRoutesBuilder(new CuratedRoute());
             }
-
-            main.configure().addRoutesBuilder(new SimpleRssRoute("Hacker News", "https://news.ycombinator.com/rss",
-                    new HackerNewsNormalizer()));
-            main.configure().addRoutesBuilder(new SimpleRssRoute("Slashdot",
-                    "http://rss.slashdot.org/Slashdot/slashdotMain/to", new SlashdotNormalizer()));
-
-
-            for (String subReddit : config.getStringArray("reddit.subreddits")) {
-                main.configure().addRoutesBuilder(new RedditRoute(subReddit, RedditRoute.KEYWORD_PREDICATE));
-            }
-
-            for (String subReddit : config.getStringArray("reddit.subreddits.wallpaper")) {
-                main.configure().addRoutesBuilder(new RedditRoute(subReddit, new WallpaperPredicate()));
-            }
-
-            main.configure().addRoutesBuilder(new PushoverRoute());
-
-            main.bind("all", new AllRecordsService());
-            main.bind("today", new TodaySharedService());
-            main.bind("convert", new ConvertDBService());
-            main.bind("cleanup", new CleanupDBService());
-            main.configure().addRoutesBuilder(new CuratedRoute());
 
             main.run();
 
