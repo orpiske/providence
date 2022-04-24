@@ -16,6 +16,7 @@
 
 package org.providence.common.dao.builder;
 
+import java.io.InputStream;
 import java.sql.SQLException;
 
 import org.apache.commons.configuration.AbstractConfiguration;
@@ -57,8 +58,11 @@ public class InternalDatabaseBuilder implements TemplateBuilder {
                         JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
 
                         try {
-                            InputStreamResource resource = new InputStreamResource(this.getClass().getResourceAsStream(
-                                    "/org/providence/common/dao/builder/create-db.sql"));
+                            InputStream resourceAsStream = this.getClass().getResourceAsStream(
+                                    "/org/providence/common/dao/builder/create-db.sql");
+
+                            assert resourceAsStream != null;
+                            InputStreamResource resource = new InputStreamResource(resourceAsStream);
 
                             ScriptUtils.executeSqlScript(ds.getConnection(), resource);
                         } catch (SQLException e) {
