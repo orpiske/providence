@@ -35,7 +35,7 @@ import org.springframework.jdbc.datasource.init.ScriptUtils;
  * The JDBC template that is used for handling internal databases
  */
 public class InternalDatabaseBuilder implements TemplateBuilder {
-    protected static BasicDataSource ds;
+    protected static volatile BasicDataSource ds;
 
     @Override
     public JdbcTemplate build() {
