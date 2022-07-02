@@ -10,7 +10,7 @@
     <version>0.0.7-SNAPSHOT</version>
 
     <properties>
-        <camel.version>3.14.3</camel.version>
+        <camel.version>3.14.4</camel.version>
         <log4j.version>1.7.36</log4j.version>
         <commons-io.version>1.10</commons-io.version>
         <commons-dbcp2.version>2.7.0</commons-dbcp2.version>
