@@ -25,7 +25,7 @@
         <maven.javadoc.plugin.version>3.5.0</maven.javadoc.plugin.version>
         <maven.release.plugin.version>3.0.1</maven.release.plugin.version>
         <maven.site.plugin.version>3.7.1</maven.site.plugin.version>
-        <maven.compiler.plugin>3.10.1</maven.compiler.plugin>
+        <maven.compiler.plugin>3.11.0</maven.compiler.plugin>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
