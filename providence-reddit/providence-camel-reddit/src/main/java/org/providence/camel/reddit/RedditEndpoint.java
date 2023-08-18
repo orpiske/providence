@@ -16,6 +16,7 @@
 
 package org.providence.camel.reddit;
 
+import org.apache.camel.Category;
 import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
@@ -30,8 +31,7 @@ import org.apache.camel.support.DefaultEndpoint;
         scheme = "reddit",
         title = "Reddit component",
         syntax = "reddit:name",
-        consumerClass = RedditConsumer.class,
-        label = "social"
+        category = Category.SOCIAL
 )
 public class RedditEndpoint extends DefaultEndpoint {
 
