@@ -10,8 +10,10 @@
     <version>0.0.7-SNAPSHOT</version>
 
     <properties>
-        <camel.version>3.20.6</camel.version>
-        <log4j.version>1.7.36</log4j.version>
+        <jdk.version>17</jdk.version>
+        <maven.compiler.release>${jdk.version}</maven.compiler.release>
+        <camel.version>4.1.0-SNAPSHOT</camel.version>
+        <slf4j.version>2.0.7</slf4j.version>
         <commons-io.version>1.10</commons-io.version>
         <commons-dbcp2.version>2.7.0</commons-dbcp2.version>
         <spring-jdbc.version>5.0.20.RELEASE</spring-jdbc.version>
@@ -41,13 +43,13 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>${log4j.version}</version>
+                <version>${slf4j.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-reload4j</artifactId>
-                <version>${log4j.version}</version>
+                <version>${slf4j.version}</version>
             </dependency>
 
             <dependency>
@@ -223,7 +225,6 @@
                 </repository>
             </distributionManagement>
         </profile>
-
 
         <profile>
             <id>Site</id>
