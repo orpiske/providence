@@ -14,7 +14,8 @@
         <maven.compiler.release>${jdk.version}</maven.compiler.release>
         <camel.version>4.1.0-SNAPSHOT</camel.version>
         <slf4j.version>2.0.7</slf4j.version>
-        <commons-io.version>1.10</commons-io.version>
+        <commons-io.version>2.6</commons-io.version>
+        <commons-configuration.version>1.10</commons-configuration.version>
         <commons-dbcp2.version>2.7.0</commons-dbcp2.version>
         <spring-jdbc.version>5.0.20.RELEASE</spring-jdbc.version>
         <h2.version>1.4.197</h2.version>
@@ -55,13 +56,13 @@
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
-                <version>2.6</version>
+                <version>${commons-io.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>commons-configuration</groupId>
                 <artifactId>commons-configuration</artifactId>
-                <version>${commons-io.version}</version>
+                <version>${commons-configuration.version}</version>
             </dependency>
 
             <dependency>
