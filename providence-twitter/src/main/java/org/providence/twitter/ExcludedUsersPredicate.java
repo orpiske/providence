@@ -9,7 +9,7 @@ import org.providence.common.ConfigurationWrapper;
 import org.providence.common.predicate.ContainsPredicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import twitter4j.Status;
+import twitter4j.v1.Status;
 
 
 public class ExcludedUsersPredicate implements Predicate {
