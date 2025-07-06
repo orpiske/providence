@@ -27,8 +27,7 @@ release:
 distributions:
   providence-collector:
     artifacts:
-      - path: providence-collector/target/providence-collector-{{projectVersion}}-bin.tar.gz
-      - path: providence-collector/target/providence-collector-{{projectVersion}}-bin.zip
+      - path: providence-collector/target/providence-collector-{{projectVersion}}-jar-with-dependencies.jar
     type: JAVA_BINARY
 
 
