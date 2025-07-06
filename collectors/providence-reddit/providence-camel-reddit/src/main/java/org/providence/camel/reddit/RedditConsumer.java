@@ -54,14 +54,14 @@ public class RedditConsumer extends ScheduledPollConsumer {
         logger.debug("Reading records every {} seconds", TimeUnit.SECONDS.toMillis(endpoint.getDelay()));
         super.setDelay(TimeUnit.SECONDS.toMillis(endpoint.getDelay()));
 
-        logger.info("Setting up Reddit credentials");
+        logger.debug("Setting up Reddit credentials");
         credentials = Credentials.script(endpoint.getUsername(), endpoint.getPassword(),
                 endpoint.getClientId(), endpoint.getClientSecret());
 
-        logger.info("Creating the Reddit network adapter");
+        logger.debug("Creating the Reddit network adapter");
         adapter = new OkHttpNetworkAdapter(userAgent);
 
-        logger.info("Creating the Reddit client");
+        logger.debug("Creating the Reddit client");
         reddit = OAuthHelper.automatic(adapter, credentials);
     }
 
