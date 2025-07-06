@@ -40,6 +40,14 @@
         </license>
     </licenses>
 
+    <scm>
+        <connection>scm:git:https://github.com/orpiske/providence.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/orpiske/providence.git</developerConnection>
+        <url>https://github.com/orpiske/providence</url>
+        <tag>HEAD</tag>
+    </scm>
+
+
     <dependencyManagement>
         <dependencies>
             <dependency>
