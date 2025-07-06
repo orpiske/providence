@@ -29,3 +29,15 @@ distributions:
     artifacts:
       - path: providence-collector/target/providence-collector-{{projectVersion}}-bin.tar.gz
     type: JAVA_BINARY
+
+packagers:
+  homebrew:
+    active: ALWAYS
+    tap:
+      owner: orpiske
+      name: homebrew-tap
+      branch: main
+      commitAuthor:
+        name: orpiske
+        email: angusyoung@gmail.com
+    formulaName: providence-collector
