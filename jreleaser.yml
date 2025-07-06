@@ -1,12 +1,25 @@
 project:
   name: providence-collector
-  version: ${project.version}
   description: Providence Collector
   longDescription: Providence Collector is a tool for collecting data from various sources.
 
+  authors:
+    - orpiske
+  license: Apache-2.0
+  languages:
+    java:
+      groupId: org.providence
+      version: 17
+  links:
+    homepage: https://github.com/orpiske/providence
+    bugTracker: https://github.com/orpiske/providence/issues
+  inceptionYear: 2018
+  tags:
+    - 'java'
+
 release:
   github:
-    owner: your-github-username
+    owner: orpiske
     name: providence-collector
     tagName: v{{projectVersion}}
     releaseName: Providence Collector {{projectVersion}}
@@ -14,6 +27,6 @@ release:
 
 distributions:
   providence-collector:
-    artifact:
-      path: providence-collector/target/providence-collector-{{projectVersion}}-bin.tar.gz
-    type: SINGLE_FILE
+    artifacts:
+      - path: providence-collector/target/providence-collector-{{projectVersion}}-bin.tar.gz
+    type: JAVA_BINARY
