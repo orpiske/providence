@@ -13,6 +13,7 @@ project:
   links:
     homepage: https://github.com/orpiske/providence
     bugTracker: https://github.com/orpiske/providence/issues
+    documentation: https://github.com/orpiske/providence
   inceptionYear: 2018
   tags:
     - 'java'
@@ -20,10 +21,8 @@ project:
 release:
   github:
     owner: orpiske
-    name: providence-collector
-    tagName: v{{projectVersion}}
-    releaseName: Providence Collector {{projectVersion}}
-    overwrite: true
+    name: providence
+    overwrite: false
 
 distributions:
   providence-collector:
