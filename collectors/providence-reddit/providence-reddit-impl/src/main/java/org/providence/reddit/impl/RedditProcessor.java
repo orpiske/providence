@@ -32,9 +32,12 @@ public class RedditProcessor implements Processor {
     public void process(Exchange exchange) {
         Submission submission = exchange.getIn().getBody(Submission.class);
 
-        exchange.getIn().setBody(submission.getTitle());
+        String stringBody = submission.getTitle();
+        exchange.getIn().setBody(String.format("%s.\n View comments at https://reddit.com%s", stringBody,
+                submission.getPermalink()));
 
-        String refLink = String.format("reddit://%s", submission.getPermalink());
+
+        String refLink = String.format("%s", submission.getUrl());
         exchange.setProperty("reference", refLink);
 
         exchange.setProperty(RouteConstants.FORMAT, "raw");
