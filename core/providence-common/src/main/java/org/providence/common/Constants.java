@@ -16,13 +16,15 @@
 package org.providence.common;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Application constants
  */
 public final class Constants {
 
-    public static final String VERSION = "0.0.6-SNAPSHOT";
+    public static final String VERSION;
 
     public static final int VERSION_NUMERIC;
 
@@ -43,6 +45,8 @@ public final class Constants {
 
         PROVIDENCE_LOG_DIR = System.getProperty(HOME_PROPERTY) + File.separator + "logs";
 
+        VERSION = initVersion();
+
         VERSION_NUMERIC = Integer.parseInt(VERSION.replace(".", "").replaceAll("[a-zA-Z-]",""));
     }
 
@@ -54,4 +58,13 @@ public final class Constants {
     }
 
 
+    private static String initVersion() {
+        try (InputStream stream = Constants.class.getResourceAsStream("/version.txt")) {
+            assert stream != null;
+            byte[] bytes = stream.readAllBytes();
+            return new String(bytes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
