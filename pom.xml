@@ -142,12 +142,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin}</version>
             </plugin>
-            <plugin>
-                <groupId>org.jreleaser</groupId>
-                <artifactId>jreleaser-maven-plugin</artifactId>
-                <version>${jreleaser-maven-plugin.version}</version>
-                <inherited>false</inherited>
-            </plugin>
         </plugins>
     </build>
 
@@ -199,7 +193,19 @@
 
                 </plugins>
             </reporting>
-
+        </profile>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jreleaser</groupId>
+                        <artifactId>jreleaser-maven-plugin</artifactId>
+                        <version>${jreleaser-maven-plugin.version}</version>
+                        <inherited>false</inherited>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 
