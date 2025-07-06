@@ -61,7 +61,7 @@ public class RedditPredicate implements Predicate {
             String subReddit = inBody.getSubreddit();
 
             String[] excludes = excludesMap.
-                    computeIfAbsent(subReddit, a -> config.getStringArray("reddit." + subReddit + ".excludes"));
+                    computeIfAbsent(subReddit, a -> config.getStringArray("reddit.subreddit." + subReddit + ".excludes"));
 
              if (!excludesMatch(stringBody, subReddit, excludes)) {
                 return true;

@@ -8,18 +8,14 @@ import org.providence.common.Constants;
 import org.providence.common.LogConfigurator;
 import org.providence.common.routes.InternalRoute;
 import org.providence.pushover.PushoverRoute;
-import org.providence.reddit.impl.RedditRoute;
-import org.providence.reddit.impl.WallpaperPredicate;
+import org.providence.reddit.impl.RedditRoutesProvider;
 import org.providence.rest.AllRecordsService;
+import org.providence.rest.CleanupDBService;
 import org.providence.rest.ConvertDBService;
 import org.providence.rest.CuratedRoute;
-import org.providence.rest.CleanupDBService;
 import org.providence.rest.TodaySharedService;
-import org.providence.rss.SimpleRssRoute;
-import org.providence.rss.normalizer.HackerNewsNormalizer;
-import org.providence.rss.normalizer.SlashdotNormalizer;
-import org.providence.twitter.TwitterRoute;
-import org.providence.twitter.TwitterUserListRoute;
+import org.providence.rss.RssRoutesProvider;
+import org.providence.twitter.TwitterRoutesProvider;
 
 public class ProvidenceCollectorMain {
 
@@ -32,6 +28,7 @@ public class ProvidenceCollectorMain {
             ConfigurationWrapper.initConfiguration(Constants.PROVIDENCE_CONFIG_DIR, "providence-twitter.properties");
             ConfigurationWrapper.initConfiguration(Constants.PROVIDENCE_CONFIG_DIR, "providence-pushover.properties");
             ConfigurationWrapper.initConfiguration(Constants.PROVIDENCE_CONFIG_DIR, "providence-reddit.properties");
+            ConfigurationWrapper.initConfiguration(Constants.PROVIDENCE_CONFIG_DIR, "providence-rss.properties");
             ConfigurationWrapper.initConfiguration(Constants.PROVIDENCE_CONFIG_DIR, "providence-common.properties");
         } catch (Exception e) {
             System.err.println("Unable to initialize configuration file: " + e.getMessage());
@@ -47,28 +44,15 @@ public class ProvidenceCollectorMain {
             try (MainConfigurationProperties mainConfigurationProperties = main.configure()) {
                 mainConfigurationProperties.addRoutesBuilder(new InternalRoute());
 
-                mainConfigurationProperties.addRoutesBuilder(new TwitterRoute());
+                TwitterRoutesProvider twitterRoutesProvider = new TwitterRoutesProvider();
+                twitterRoutesProvider.buildForCollector("twitter", config).forEach(mainConfigurationProperties::addRoutesBuilder);
 
-                for (String listOwner : config.getStringArray("twitter.user.lists.owner")) {
-                    for (String list : config.getStringArray("twitter.user.lists." + listOwner)) {
-                        System.out.println("Adding list " + list + " by user " + listOwner);
-                        mainConfigurationProperties.addRoutesBuilder(new TwitterUserListRoute(listOwner, list));
-                    }
-                }
+                RssRoutesProvider rssRoutesProvider = new RssRoutesProvider();
+                rssRoutesProvider.buildForCollector("hacker-news", config).forEach(mainConfigurationProperties::addRoutesBuilder);
+                rssRoutesProvider.buildForCollector("slashdot", config).forEach(mainConfigurationProperties::addRoutesBuilder);
 
-                mainConfigurationProperties.addRoutesBuilder(new SimpleRssRoute("Hacker News", "https://news.ycombinator.com/rss",
-                        new HackerNewsNormalizer()));
-                mainConfigurationProperties.addRoutesBuilder(new SimpleRssRoute("Slashdot",
-                        "http://rss.slashdot.org/Slashdot/slashdotMain/to", new SlashdotNormalizer()));
-
-
-                for (String subReddit : config.getStringArray("reddit.subreddits")) {
-                    mainConfigurationProperties.addRoutesBuilder(new RedditRoute(subReddit, RedditRoute.KEYWORD_PREDICATE));
-                }
-
-                for (String subReddit : config.getStringArray("reddit.subreddits.wallpaper")) {
-                    mainConfigurationProperties.addRoutesBuilder(new RedditRoute(subReddit, new WallpaperPredicate()));
-                }
+                RedditRoutesProvider redditRoutesProvider = new RedditRoutesProvider();
+                redditRoutesProvider.buildForCollector("reddit", config).forEach(mainConfigurationProperties::addRoutesBuilder);
 
                 mainConfigurationProperties.addRoutesBuilder(new PushoverRoute());
 

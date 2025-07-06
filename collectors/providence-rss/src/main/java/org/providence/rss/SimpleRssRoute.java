@@ -28,6 +28,8 @@ public class SimpleRssRoute extends RouteBuilder {
     private final String address;
     private final String name;
     private final RssNormalizer rssNormalizer;
+    private long interval;
+    private long initialInterval;
 
     public SimpleRssRoute(final String name, final String address, final RssNormalizer rssNormalizer) {
         this.name = name;
@@ -35,16 +37,21 @@ public class SimpleRssRoute extends RouteBuilder {
         this.rssNormalizer = rssNormalizer;
     }
 
+    public SimpleRssRoute setInterval(long interval) {
+        this.interval = interval;
+        return this;
+    }
+
+    public SimpleRssRoute setInitialInterval(long initialInterval) {
+        this.initialInterval = initialInterval;
+        return this;
+    }
+
     @Override
     public void configure() {
         String dlc = String.format("seda:rssErrors%s", name);
 
         errorHandler(deadLetterChannel(dlc));
-
-        final String simpleName = name.toLowerCase().replace(" ", "");
-
-        long interval = config.getLong(simpleName + ".poll.interval", 1800000);
-        long initialInterval = config.getLong(simpleName + ".initial.interval", 60000);
 
         fromF("rss:%s?splitEntries=false&delay=%d&initialDelay=%d", address, interval, initialInterval)
                 .split()
