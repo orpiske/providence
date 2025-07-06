@@ -77,14 +77,6 @@ public class LogConfigurator {
     }
 
     /**
-     * Default log configuration for the daemon
-     */
-    public static void defaultForDaemons() {
-        PropertyConfigurator.configure(Constants.PROVIDENCE_CONFIG_DIR
-                + File.separator + "log4j.properties");
-    }
-
-    /**
      * Configure the output to be at trace level
      */
     public static void trace() {
@@ -157,10 +149,6 @@ public class LogConfigurator {
             }
             case "warn": {
                 LogConfigurator.silent();
-                break;
-            }
-            case "custom": {
-                LogConfigurator.defaultForDaemons();
                 break;
             }
             case "info":

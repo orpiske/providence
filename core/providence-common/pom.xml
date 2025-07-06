@@ -58,6 +58,7 @@
                 <filtering>true</filtering>
                 <includes>
                     <include>**/version.txt</include>
+                    <include>**/*</include>
                 </includes>
             </resource>
         </resources>

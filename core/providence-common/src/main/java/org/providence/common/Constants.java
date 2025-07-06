@@ -36,14 +36,10 @@ public final class Constants {
 
     public static final String PROVIDENCE_CONFIG_DIR;
 
-    public static final String PROVIDENCE_LOG_DIR;
-
     static {
-        HOME_DIR = System.getProperty(HOME_PROPERTY);
+        HOME_DIR = System.getProperty(HOME_PROPERTY, System.getProperty("user.home"));
 
-        PROVIDENCE_CONFIG_DIR = System.getProperty(HOME_PROPERTY) + File.separator + "config";
-
-        PROVIDENCE_LOG_DIR = System.getProperty(HOME_PROPERTY) + File.separator + "logs";
+        PROVIDENCE_CONFIG_DIR = HOME_DIR + File.separator + (System.getProperty(HOME_PROPERTY) == null? ".providence" : "");
 
         VERSION = initVersion();
 

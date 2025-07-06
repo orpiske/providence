@@ -20,7 +20,7 @@ import org.providence.twitter.TwitterRoutesProvider;
 public class ProvidenceCollectorMain {
 
     static {
-        LogConfigurator.defaultForDaemons();
+        LogConfigurator.verbose();
     }
 
     public static void main(String[] args) {
