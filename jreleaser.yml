@@ -2,7 +2,6 @@ project:
   name: providence-collector
   description: Providence Collector
   longDescription: Providence Collector is a tool for collecting data from various sources.
-
   authors:
     - orpiske
   license: Apache-2.0
