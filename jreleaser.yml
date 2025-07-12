@@ -9,7 +9,7 @@ project:
   languages:
     java:
       groupId: org.providence
-      version: 17
+      version: 21
   links:
     homepage: https://github.com/orpiske/providence
     bugTracker: https://github.com/orpiske/providence/issues
