@@ -34,6 +34,8 @@ public class CuratedRoute extends RouteBuilder {
         rest("/")
                 .get("/curated/all").to("bean:all")
                 .get("/curated/today").to("bean:today")
+                .get("/curated/yesterday").to("bean:yesterday")
+                .get("/curated/last/seven").to("bean:lastSevenDays")
                 .get("/convert").to("bean:convert")
                 .get("/cleanup").to("bean:cleanup");
 

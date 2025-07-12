@@ -76,6 +76,14 @@ public class SharedDao extends AbstractDao {
         return runQueryMany("select * from shared where shared_date >= CURRENT_DATE()", new BeanPropertyRowMapper<>(Shared.class));
     }
 
+    public List<Shared> yesterday() throws DataNotFoundException {
+        return runQueryMany("select * from shared where shared_date >= DATEADD('DAY', -1, CURRENT_DATE())", new BeanPropertyRowMapper<>(Shared.class));
+    }
+
+    public List<Shared> lastSevenDays() throws DataNotFoundException {
+        return runQueryMany("select * from shared where shared_date >= DATEADD('DAY', -7, CURRENT_DATE())", new BeanPropertyRowMapper<>(Shared.class));
+    }
+
     public List<Shared> convertableRecords() throws DataNotFoundException {
         return runQueryMany("select * from shared where shared_hash = 0 or shared_hash = null",
                 new BeanPropertyRowMapper<>(Shared.class));

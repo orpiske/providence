@@ -13,7 +13,9 @@ import org.providence.rest.AllRecordsService;
 import org.providence.rest.CleanupDBService;
 import org.providence.rest.ConvertDBService;
 import org.providence.rest.CuratedRoute;
+import org.providence.rest.Last7DaysSharedService;
 import org.providence.rest.TodaySharedService;
+import org.providence.rest.YesterdaySharedService;
 import org.providence.rss.RssRoutesProvider;
 import org.providence.twitter.TwitterRoutesProvider;
 
@@ -58,6 +60,8 @@ public class ProvidenceCollectorMain {
 
                 main.bind("all", new AllRecordsService());
                 main.bind("today", new TodaySharedService());
+                main.bind("yesterday", new YesterdaySharedService());
+                main.bind("lastSevenDays", new Last7DaysSharedService());
                 main.bind("convert", new ConvertDBService());
                 main.bind("cleanup", new CleanupDBService());
                 mainConfigurationProperties.addRoutesBuilder(new CuratedRoute());
