@@ -10,7 +10,7 @@
     <properties>
         <jdk.version>21</jdk.version>
         <maven.compiler.release>${jdk.version}</maven.compiler.release>
-        <camel.version>4.12.0</camel.version>
+        <camel.version>4.13.0</camel.version>
         <slf4j.version>2.0.17</slf4j.version>
         <commons-io.version>2.19.0</commons-io.version>
         <commons-configuration.version>1.10</commons-configuration.version>
