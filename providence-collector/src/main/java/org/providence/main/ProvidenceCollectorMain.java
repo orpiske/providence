@@ -2,7 +2,7 @@ package org.providence.main;
 
 import org.apache.camel.main.Main;
 import org.apache.camel.main.MainConfigurationProperties;
-import org.apache.commons.configuration.AbstractConfiguration;
+import org.apache.commons.configuration2.AbstractConfiguration;
 import org.providence.common.ConfigurationWrapper;
 import org.providence.common.Constants;
 import org.providence.common.LogConfigurator;

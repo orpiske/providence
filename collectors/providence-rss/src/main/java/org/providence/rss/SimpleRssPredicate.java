@@ -19,7 +19,7 @@ package org.providence.rss;
 import com.rometools.rome.feed.synd.SyndEntryImpl;
 import org.apache.camel.Exchange;
 import org.apache.camel.Predicate;
-import org.apache.commons.configuration.AbstractConfiguration;
+import org.apache.commons.configuration2.AbstractConfiguration;
 import org.providence.common.ConfigurationWrapper;
 import org.providence.common.predicate.ContainsPredicate;
 import org.providence.common.predicate.MatchUtils;

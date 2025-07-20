@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.camel.RoutesBuilder;
-import org.apache.commons.configuration.AbstractConfiguration;
+import org.apache.commons.configuration2.AbstractConfiguration;
 import org.providence.common.RoutesBuilderProvider;
 
 public class RedditRoutesProvider implements RoutesBuilderProvider {

@@ -13,7 +13,7 @@
         <camel.version>4.13.0</camel.version>
         <slf4j.version>2.0.17</slf4j.version>
         <commons-io.version>2.19.0</commons-io.version>
-        <commons-configuration.version>1.10</commons-configuration.version>
+        <commons-configuration.version>2.7</commons-configuration.version>
         <commons-dbcp2.version>2.13.0</commons-dbcp2.version>
         <spring-jdbc.version>5.0.20.RELEASE</spring-jdbc.version>
         <h2.version>2.3.232</h2.version>
@@ -28,6 +28,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jreleaser-maven-plugin.version>1.19.0</jreleaser-maven-plugin.version>
+        <commons-beanutils.version>1.11.0</commons-beanutils.version>
     </properties>
 
     <licenses>
@@ -76,9 +77,15 @@
             </dependency>
 
             <dependency>
-                <groupId>commons-configuration</groupId>
-                <artifactId>commons-configuration</artifactId>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-configuration2</artifactId>
                 <version>${commons-configuration.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons-beanutils.version}</version>
             </dependency>
 
             <dependency>

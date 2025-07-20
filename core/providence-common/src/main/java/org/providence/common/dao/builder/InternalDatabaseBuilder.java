@@ -19,7 +19,7 @@ package org.providence.common.dao.builder;
 import java.io.InputStream;
 import java.sql.SQLException;
 
-import org.apache.commons.configuration.AbstractConfiguration;
+import org.apache.commons.configuration2.AbstractConfiguration;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.providence.common.ConfigurationWrapper;
 import org.providence.common.dao.TemplateBuilder;

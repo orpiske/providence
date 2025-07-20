@@ -3,7 +3,7 @@ package org.providence.common;
 import java.util.List;
 
 import org.apache.camel.RoutesBuilder;
-import org.apache.commons.configuration.AbstractConfiguration;
+import org.apache.commons.configuration2.AbstractConfiguration;
 
 public interface RoutesBuilderProvider {
 

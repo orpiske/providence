@@ -20,10 +20,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-import org.apache.commons.configuration.AbstractConfiguration;
-import org.apache.commons.configuration.CompositeConfiguration;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.configuration2.AbstractConfiguration;
+import org.apache.commons.configuration2.CompositeConfiguration;
+import org.apache.commons.configuration2.PropertiesConfiguration;
+import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
+import org.apache.commons.configuration2.builder.fluent.Parameters;
+import org.apache.commons.configuration2.builder.fluent.PropertiesBuilderParameters;
+import org.apache.commons.configuration2.convert.DefaultListDelimiterHandler;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 
 
 /**
@@ -55,9 +59,16 @@ public class ConfigurationWrapper {
 				+ fileName;
 		File userFile = new File(userFilePath);
 		
-		if (userFile.exists()) { 
-			PropertiesConfiguration userConfiguration = 
-					new PropertiesConfiguration(userFile);
+		if (userFile.exists()) {
+			PropertiesBuilderParameters propertiesBuilderParameters = new Parameters().properties().setFileName(userFilePath)
+					.setThrowExceptionOnMissing(true)
+					.setListDelimiterHandler(new DefaultListDelimiterHandler(','))
+					.setIncludesAllowed(false);
+			FileBasedConfigurationBuilder<PropertiesConfiguration> builder =
+					new FileBasedConfigurationBuilder<>(PropertiesConfiguration.class)
+							.configure(propertiesBuilderParameters);
+
+			PropertiesConfiguration userConfiguration = builder.getConfiguration();
 
 			config.addConfiguration(userConfiguration);
 		}
@@ -71,10 +82,17 @@ public class ConfigurationWrapper {
 		}
 
 
-        PropertiesConfiguration systemConfig = new PropertiesConfiguration(configDir + File.separator
-                + fileName);
-        config.addConfiguration(systemConfig);
+		PropertiesBuilderParameters propertiesBuilderParameters = new Parameters().properties().setFileName(configDir + File.separator
+						+ fileName)
+				.setThrowExceptionOnMissing(true)
+				.setListDelimiterHandler(new DefaultListDelimiterHandler(','))
+				.setIncludesAllowed(false);
+		FileBasedConfigurationBuilder<PropertiesConfiguration> builder =
+				new FileBasedConfigurationBuilder<>(PropertiesConfiguration.class)
+						.configure(propertiesBuilderParameters);
 
+        PropertiesConfiguration systemConfig = builder.getConfiguration();
+        config.addConfiguration(systemConfig);
     }
 
 	/**

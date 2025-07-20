@@ -18,7 +18,7 @@ package org.providence.twitter;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.commons.configuration.AbstractConfiguration;
+import org.apache.commons.configuration2.AbstractConfiguration;
 import org.providence.common.ConfigurationWrapper;
 import org.providence.common.RouteConstants;
 import org.slf4j.Logger;

@@ -18,7 +18,7 @@ package org.providence.reddit.impl;
 
 import org.apache.camel.Predicate;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.commons.configuration.AbstractConfiguration;
+import org.apache.commons.configuration2.AbstractConfiguration;
 import org.providence.common.ConfigurationWrapper;
 import org.providence.common.RouteConstants;
 import org.slf4j.Logger;

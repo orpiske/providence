@@ -17,7 +17,7 @@
 package org.providence.rss;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.commons.configuration.AbstractConfiguration;
+import org.apache.commons.configuration2.AbstractConfiguration;
 import org.providence.common.ConfigurationWrapper;
 import org.providence.common.RouteConstants;
 import org.providence.rss.normalizer.RssNormalizer;
