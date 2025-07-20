@@ -49,9 +49,14 @@ public class ProvidenceCollectorMain {
                 TwitterRoutesProvider twitterRoutesProvider = new TwitterRoutesProvider();
                 twitterRoutesProvider.buildForCollector("twitter", config).forEach(mainConfigurationProperties::addRoutesBuilder);
 
+                String[] feeds = config.getStringArray("rss.feeds");
+
                 RssRoutesProvider rssRoutesProvider = new RssRoutesProvider();
-                rssRoutesProvider.buildForCollector("hacker-news", config).forEach(mainConfigurationProperties::addRoutesBuilder);
-                rssRoutesProvider.buildForCollector("slashdot", config).forEach(mainConfigurationProperties::addRoutesBuilder);
+                for (String feed : feeds) {
+                    System.out.println("Adding feed: " + feed);
+                    rssRoutesProvider.buildForCollector(feed, config).forEach(mainConfigurationProperties::addRoutesBuilder);
+                }
+
 
                 RedditRoutesProvider redditRoutesProvider = new RedditRoutesProvider();
                 redditRoutesProvider.buildForCollector("reddit", config).forEach(mainConfigurationProperties::addRoutesBuilder);
