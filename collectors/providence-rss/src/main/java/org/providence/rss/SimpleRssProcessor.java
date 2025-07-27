@@ -41,7 +41,7 @@ public class SimpleRssProcessor implements Processor {
 
         logger.debug("RSS Content: {}", entryBody);
 
-        String newBody = normalizer.normalize(entryBody);
+        String newBody = normalizer.normalize(entryBody, exchange);
 
         exchange.setProperty(RouteConstants.FORMAT, "formatted");
         exchange.getIn().setBody(newBody);

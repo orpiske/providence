@@ -20,13 +20,18 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 import com.rometools.rome.feed.synd.SyndEntryImpl;
+import org.apache.camel.Exchange;
+import org.providence.common.RouteConstants;
 
 public class HackerNewsNormalizer extends RssNormalizer {
 
     @Override
-    public String normalize(SyndEntryImpl entryBody) {
+    public String normalize(SyndEntryImpl entryBody, Exchange exchange) {
+        String reference = URLEncoder.encode(entryBody.getLink(), StandardCharsets.UTF_8);
+        exchange.setProperty(RouteConstants.REFERENCE, reference);
+
         return String.format("<a href=\"%s\">%s</a> published on %s. Follow the %s",
-                URLEncoder.encode(entryBody.getLink(), StandardCharsets.UTF_8), entryBody.getTitle(), entryBody.getPublishedDate(),
+                reference, entryBody.getTitle(), entryBody.getPublishedDate(),
                 entryBody.getDescription().getValue());
     }
 }

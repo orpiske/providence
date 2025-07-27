@@ -16,6 +16,8 @@
 
 package org.providence.common.normalizer;
 
+import org.apache.camel.Exchange;
+
 public interface Normalizer<T, V> {
-    T normalize(V value);
+    T normalize(V value, Exchange exchange);
 }
