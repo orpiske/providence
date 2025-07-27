@@ -21,6 +21,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.spi.ErrorHandler;
 import org.apache.commons.configuration2.AbstractConfiguration;
 import org.providence.common.ConfigurationWrapper;
+import org.providence.common.Format;
 import org.providence.common.RouteConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +56,7 @@ public class PushoverRoute extends RouteBuilder {
                 .setHeader(Exchange.CONTENT_TYPE, constant("application/x-www-form-urlencoded"))
                 .setHeader(Exchange.HTTP_METHOD, constant("POST"))
                 .choice()
-                    .when(exchange -> exchange.getProperty(RouteConstants.FORMAT).equals("raw"))
+                    .when(exchange -> exchange.getProperty(RouteConstants.FORMAT).equals(Format.RAW))
                         .setBody(simple(rawBody))
                     .otherwise()
                         .setBody(simple(formattedBody))

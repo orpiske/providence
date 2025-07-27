@@ -19,6 +19,7 @@ package org.providence.reddit.impl;
 import net.dean.jraw.models.Submission;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.providence.common.Format;
 import org.providence.common.RouteConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +41,7 @@ public class RedditProcessor implements Processor {
         String refLink = String.format("%s", submission.getUrl());
         exchange.setProperty(RouteConstants.REFERENCE, refLink);
 
-        exchange.setProperty(RouteConstants.FORMAT, "raw");
+        exchange.setProperty(RouteConstants.FORMAT, Format.RAW);
 
         logger.debug("Reddit content: {}", exchange.getIn().getBody(String.class));
     }
