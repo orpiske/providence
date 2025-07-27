@@ -38,7 +38,7 @@ public class RedditProcessor implements Processor {
 
 
         String refLink = String.format("%s", submission.getUrl());
-        exchange.setProperty("reference", refLink);
+        exchange.setProperty(RouteConstants.REFERENCE, refLink);
 
         exchange.setProperty(RouteConstants.FORMAT, "raw");
 

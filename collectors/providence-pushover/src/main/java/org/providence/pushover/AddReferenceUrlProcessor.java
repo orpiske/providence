@@ -18,13 +18,14 @@ package org.providence.pushover;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.providence.common.RouteConstants;
 
 public class AddReferenceUrlProcessor implements Processor {
     @Override
     public void process(Exchange exchange) {
         String body = exchange.getIn().getBody(String.class);
 
-        Object referenceUrl = exchange.getProperty("reference");
+        Object referenceUrl = exchange.getProperty(RouteConstants.REFERENCE);
 
         if (referenceUrl != null) {
             String newBody = String.format("%s&url=%s&url_title=View", body, referenceUrl);
