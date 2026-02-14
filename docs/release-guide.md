@@ -1,1 +1,1 @@
-gh workflow run release -f currentDevelopmentVersion=0.0.10 -f nextDevelopmentVersion=0.0.11
+gh workflow run release -f currentDevelopmentVersion=0.0.12 -f nextDevelopmentVersion=0.0.13
