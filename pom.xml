@@ -15,7 +15,7 @@
         <commons-io.version>2.21.0</commons-io.version>
         <commons-configuration.version>2.13.0</commons-configuration.version>
         <commons-dbcp2.version>2.14.0</commons-dbcp2.version>
-        <spring-jdbc.version>6.2.12</spring-jdbc.version>
+        <spring-jdbc.version>7.0.6</spring-jdbc.version>
         <h2.version>2.4.240</h2.version>
         <jraw.version>1.2.0</jraw.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
