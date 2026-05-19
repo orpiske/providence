@@ -11,7 +11,7 @@
         <jdk.version>21</jdk.version>
         <maven.compiler.release>${jdk.version}</maven.compiler.release>
         <camel.version>4.18.1</camel.version>
-        <slf4j.version>2.0.17</slf4j.version>
+        <slf4j.version>2.0.18</slf4j.version>
         <commons-io.version>2.21.0</commons-io.version>
         <commons-configuration.version>2.13.0</commons-configuration.version>
         <commons-dbcp2.version>2.14.0</commons-dbcp2.version>
